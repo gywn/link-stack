@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "Node",
+        "lib": ["es2017", "dom"],
+        "typeRoots": ["./node_modules/@types", "./web-ext-types"],  // global namespace
+        "types": ["react", "react-dom", "global"],
+        "jsx": "react",
+        "noImplicitAny": true,
+        "strict": true,
+        "module": "es6",
+        "target": "es2017",
+        "outDir": "./.ts_temp",
+    },
+    "include": [
+        "./src/*.ts",
+        "./src/*.tsx"
+    ]
+}

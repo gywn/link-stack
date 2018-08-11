@@ -1,0 +1,31 @@
+{
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
+        }
+    },
+    "commands": {
+        "push-active-tab": {
+            "description": "Archive & close the current tab",
+            "suggested_key": {"default": "Alt+Shift+2"}
+        }
+    },
+    "content_scripts": [{
+        "js": ["content-persistent.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "icons": {
+        "16": "images/icon-16.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+    "description": "BiuBiu",
+    "manifest_version": 2,
+    "name": "Link Stack",
+    "permissions": ["tabs", "<all_urls>", "storage", "contextMenus", "bookmarks"],
+    "version": "0.1"
+}
