@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { ViewModel } from "./view-model";
 import { Provider } from "./context";
 import { LinkStack } from "./LinkStack";
+import "../style/view.less";
 
 window.onload = async () => {
   const model = new ViewModel();

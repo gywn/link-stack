@@ -55,7 +55,10 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
   const views: Map<browser.runtime.Port, View> = new Map();
   (window as any).views = views; // expose for debugging
 
-  const stack = new LinkStack({ store: store.local, onUpdate: stack => onLSUpdate(views, stack) });
+  const stack = new LinkStack({
+    store: store.local,
+    onUpdate: stack => onLSUpdate(views, stack)
+  });
   (window as any).stack = stack; // expose for debugging
   await stack.setRoot();
 
@@ -83,7 +86,8 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
         }
         if (isMessage(o, MsgType.Id)) {
           if (o.intention === "delete-id") await stack.remove(o.data);
-          if (o.intention === "set-root-id") await stack.setRoot({ id: o.data });
+          if (o.intention === "set-root-id")
+            await stack.setRoot({ id: o.data });
         }
         console.log(
           "BG_ON_MSG",

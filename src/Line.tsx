@@ -3,6 +3,8 @@ import { MsgType, createMessage } from "./Message";
 import { Line as lsLine } from "./link-stack";
 import { ViewModel } from "./view-model";
 import { Consumer } from "./context";
+import Icon from "antd/lib/icon";
+import "antd/lib/icon/style";
 import { Link } from "./Link";
 
 interface LineProps {
@@ -35,10 +37,9 @@ export class Line extends React.Component<LineProps> {
             />
           );
           const removeLink = (
-            <a
-              className="remove icon icon-cross_mark"
-              onClick={this.onRemove}
-            />
+            <a className="remove icon icon-cross_mark" onClick={this.onRemove}>
+              <Icon type="close" />
+            </a>
           );
           if (this.line.sourceId !== null) {
             const source = graph.lines.get(this.line.sourceId);
@@ -54,7 +55,9 @@ export class Line extends React.Component<LineProps> {
               <div className="line">
                 {removeLink}
                 {mainLink}
-                <span className="sourceConn icon icon-arrow_left" />
+                <span className="sourceConn icon icon-arrow_left">
+                  <Icon type="arrow-left" />
+                </span>
                 {sourceLink}
               </div>
             );

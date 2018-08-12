@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "antd/lib/button";
 
 interface LinkProps {
   url: string;

@@ -67,6 +67,9 @@ export class ViewModel {
         this._port.postMessage(o);
         this.state = { ...this.state, showCascader: true };
       }
+      if (o.intention === "hide-cascader") {
+        this.state = { ...this.state, showCascader: false };
+      }
     }
     if (isMessage(o, MsgType.Snapshot)) {
       if (o.intention === "update")

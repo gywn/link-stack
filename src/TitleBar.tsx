@@ -3,7 +3,22 @@ import { MsgType, createMessage, createIntention } from "./Message";
 import { ViewModel } from "./view-model";
 import { Consumer } from "./context";
 import Cascader from "antd/lib/cascader";
-import Button from "antd/lib/button";
+import "antd/lib/cascader/style";
+import Divider from "antd/lib/divider";
+import "antd/lib/divider/style";
+import Icon from "antd/lib/icon";
+import "antd/lib/icon/style";
+import Tooltip from "antd/lib/tooltip";
+import "antd/lib/tooltip/style";
+import Modal from "antd/lib/modal";
+import "antd/lib/modal/style";
+
+const SET_ROOT_MSG = (
+  <span>
+    Link Stack takes over a folder to manage its data. All bookmarks in the said
+    folder will be kept.
+  </span>
+);
 
 export class TitleBar extends React.Component {
   model?: ViewModel;
@@ -14,19 +29,16 @@ export class TitleBar extends React.Component {
         {(model: ViewModel | null) => {
           if (!model) return;
           this.model = model;
-          return model.state.showCascader &&
-            model.state.bookmarkTree !== null ? (
-            <RootSelector />
-          ) : (
+          return (
             <div className="root">
               <span className="rootTitle">{model.state.name}</span>
-              <Button
-                size="small"
-                onClick={this.onClickChangeRoot}
-                htmlType="button"
-              >
-                Change
-              </Button>
+              <Divider type="vertical" />
+              <Tooltip title="Change Folder" placement="bottom">
+                <a onClick={this.onClickChangeRoot}>
+                  <Icon type="book" />
+                </a>
+              </Tooltip>
+              <RootSelector />
             </div>
           );
         }}
@@ -53,25 +65,25 @@ export class RootSelector extends React.Component<
         {(model: ViewModel | null) => {
           if (!model) return;
           this.model = model;
-          return model.state.showCascader && model.state.bookmarkTree ? (
-            <div className="root">
-              <Cascader
-                className="rootSelector"
-                size="large"
-                options={model.state.bookmarkTree}
-                changeOnSelect
-                onChange={this.onSelectChange}
-              />
-              <Button
-                size="large"
-                type={this.state && this.state.rootId ? "primary" : "default"}
-                onClick={this.onClickConfirmRoot}
-                htmlType="button"
-              >
-                {this.state && this.state.rootId ? "Change" : "Cancel"}
-              </Button>
-            </div>
-          ) : null;
+          return (
+            <Modal
+              title="Change Folder"
+              visible={!!(model.state.showCascader && model.state.bookmarkTree)}
+              onOk={this.onClickConfirmRoot}
+              okButtonProps={{ disabled: !this.state.rootId }}
+              onCancel={this.onClickCancel}
+            >
+              <p>
+                <Cascader
+                  className="rootSelector"
+                  options={model.state.bookmarkTree || []}
+                  changeOnSelect
+                  onChange={this.onSelectChange}
+                />
+              </p>
+              <p>{SET_ROOT_MSG}</p>
+            </Modal>
+          );
         }}
       </Consumer>
     );
@@ -84,8 +96,7 @@ export class RootSelector extends React.Component<
   };
 
   onClickConfirmRoot = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (this.model && this.state && this.state.rootId)
+    if (this.model && this.state.rootId) {
       this.model.dispatch(
         createMessage<MsgType.Id>({
           intention: "set-root-id",
@@ -93,5 +104,10 @@ export class RootSelector extends React.Component<
           data: this.state.rootId
         })
       );
+    }
+  };
+
+  onClickCancel = (e: React.MouseEvent) => {
+    if (this.model) this.model.dispatch(createIntention("hide-cascader"));
   };
 }
