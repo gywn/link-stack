@@ -95,7 +95,7 @@ export class RootSelector extends React.Component<
     });
   };
 
-  onClickConfirmRoot = (e: React.MouseEvent) => {
+  onClickConfirmRoot = () => {
     if (this.model && this.state.rootId) {
       this.model.dispatch(
         createMessage<MsgType.Id>({
@@ -107,7 +107,7 @@ export class RootSelector extends React.Component<
     }
   };
 
-  onClickCancel = (e: React.MouseEvent) => {
+  onClickCancel = () => {
     if (this.model) this.model.dispatch(createIntention("hide-cascader"));
   };
 }

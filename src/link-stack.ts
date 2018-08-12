@@ -218,7 +218,7 @@ export class LinkStack {
     );
   }
 
-  private async _syncRoot(opt?: { id?: string; name?: string }): Promise<void> {
+  private async _syncRoot(): Promise<void> {
     if (!this._root) return;
     const root = (await browser.bookmarks.get(this._root.id))[0];
     this._root = root;

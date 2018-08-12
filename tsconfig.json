@@ -2,14 +2,18 @@
     "compilerOptions": {
         "moduleResolution": "Node",
         "lib": ["es2017", "dom"],
+        "jsx": "react",
         "typeRoots": ["./node_modules/@types", "./web-ext-types"],  // global namespace
         "types": ["react", "react-dom", "global"],
-        "jsx": "react",
-        "noImplicitAny": true,
         "strict": true,
-        "module": "es6",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "module": "es2015",
         "target": "es2017",
-        "outDir": "./.ts_temp",
+        "noEmit": true
     },
     "include": [
         "./src/*.ts",
