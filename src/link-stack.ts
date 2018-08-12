@@ -1,4 +1,5 @@
 import { Serial } from "./serial";
+import { StoreAPI } from 'store2';
 import { Line, AddDetails, Graph, Snapshot } from "./link-stack.d";
 
 export { Line, AddDetails, Graph, Snapshot };
@@ -109,26 +110,25 @@ const buildGraph = async (
  */
 
 export class LinkStack {
+  private _serial = new Serial();
+  private _root: browser.bookmarks.BookmarkTreeNode | null = null;
+  private _monotron = 0;
+  private _syncedMonotron = -1;
+  private _graph : Graph = emptyGraph();
+
   private _defaultName: string;
-  private _serial: Serial;
-  private _root: browser.bookmarks.BookmarkTreeNode | null;
-  private _monotron: number;
-  private _syncedMonotron: number;
+  private _store: StoreAPI | null;
   private _onUpdate: (stack: LinkStack) => void;
-  private _graph: Graph;
 
   constructor(opt?: {
-    defaultName?: string;
+    name?: string;
     onUpdate?: ((stack: LinkStack) => void);
+    store?: StoreAPI
   }) {
-    this._defaultName = (opt && opt.defaultName) || "Link Stack";
-    this._onUpdate = (opt && opt.onUpdate) || (() => {});
-    this._serial = new Serial();
+    this._defaultName = opt && opt.name || "Link Stack";
+    this._store = opt && opt.store || null;
+    this._onUpdate = opt && opt.onUpdate || (() => {});
     this._serial.subscribe("update", () => this._onUpdate(this));
-    this._root = null;
-    this._monotron = 0;
-    this._syncedMonotron = -1;
-    this._graph = emptyGraph();
 
     setInterval(this._heartBeat, 1000 * 5);
   }
@@ -146,8 +146,8 @@ export class LinkStack {
     url,
     title,
     source = null
-  }: AddDetails): Promise<Line | undefined> {
-    const newId = <string>await this._serial.run(async () => {
+  }: AddDetails): Promise<Line | null> {
+    const newId = await this._serial.run(async () => {
       const sourceId = !source
         ? null
         : await this._pushWithId({
@@ -167,7 +167,7 @@ export class LinkStack {
       return newId;
     });
     await this._sync({ message: "push" });
-    return this._graph.lines.get(newId);
+    return newId && this._graph.lines.get(newId) || null;
   }
 
   async remove(id: string): Promise<void> {
@@ -183,9 +183,10 @@ export class LinkStack {
   }
 
   async setRoot(opt?: { id?: string; name?: string }): Promise<void> {
+    const _id: string | null = opt && opt.id || this._store && this._store.get('rootId');
     await this._serial.run(async () => {
-      const folders = (opt && opt.id
-        ? await browser.bookmarks.get(opt.id)
+      const folders = (_id
+        ? await browser.bookmarks.get(_id)
         : await browser.bookmarks.search({
             title: (opt && opt.name) || this._defaultName
           })
@@ -197,6 +198,7 @@ export class LinkStack {
               title: this._defaultName,
               type: "folder"
             });
+      if (this._store) this._store.set('rootId', this._root.id);
       this._monotron++;
     });
     await this._sync({ message: "set-root-id" });

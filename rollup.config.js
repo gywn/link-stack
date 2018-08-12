@@ -27,6 +27,9 @@ export default ['background', 'content-persistent', 'view'].map(basename => ({
           'createElement',
           'cloneElement',
           'createContext',
+        ],
+        'node_modules/store2/dist/store2.js': [
+          'local'
         ]
       }
     }), // transform CommonJS format into ES6

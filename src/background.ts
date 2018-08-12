@@ -1,6 +1,7 @@
 import { MsgType, isMessage, createMessage } from "./Message";
 import { AddDetails, LinkStack } from "./link-stack";
 import { bookmarkTree } from "./bookmark-tree";
+import * as store from "store2";
 
 interface View {
   port: browser.runtime.Port;
@@ -52,11 +53,13 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
 
 (async () => {
   const views: Map<browser.runtime.Port, View> = new Map();
-  (<any>window).views = views; // expose for debugging
+  (window as any).views = views; // expose for debugging
 
-  const stack = new LinkStack({ onUpdate: stack => onLSUpdate(views, stack) });
-  (<any>window).stack = stack; // expose for debugging
+  const stack = new LinkStack({ store: store.local, onUpdate: stack => onLSUpdate(views, stack) });
+  (window as any).stack = stack; // expose for debugging
   await stack.setRoot();
+
+  (window as any).store = store;
 
   let rightClickInfo: AddDetails | null = null;
 
