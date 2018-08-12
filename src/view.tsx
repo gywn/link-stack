@@ -16,7 +16,13 @@ window.onload = async () => {
       </Provider>,
       document.body
     );
-    document.title = state.graph.ids.length + " Links | Link Stack";
+    document.title =
+      browser.i18n.getMessage(
+        "extensionTitle",
+        state.graph.ids.length.toString()
+      ) +
+      " | " +
+      browser.i18n.getMessage("extensionName");
   });
 
   console.log("view loaded");

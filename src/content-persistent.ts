@@ -12,18 +12,20 @@ document.addEventListener(
           let title = node.innerText;
           if (!title || title === "") title = url;
 
-          browser.runtime.sendMessage(createMessage<MsgType.AddDetails>({
-            intention: "cache-right-click-info",
-            type: MsgType.AddDetails,
-            data: {
-              title,
-              url,
-              source: {
-                title: document.title,
-                url: location.href
+          browser.runtime.sendMessage(
+            createMessage<MsgType.AddDetails>({
+              intention: "cache-right-click-info",
+              type: MsgType.AddDetails,
+              data: {
+                title,
+                url,
+                source: {
+                  title: document.title,
+                  url: location.href
+                }
               }
-            }
-          }));
+            })
+          );
           break;
         } else {
           node = node.parentNode;

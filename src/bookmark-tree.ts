@@ -26,15 +26,17 @@ const bookmarkTree = async (): Promise<CascaderOptionType[] | null> => {
 };
 
 const bookmarkPath = async (id: string): Promise<string[]> => {
-  const path : string[] = [];
+  const path: string[] = [];
   let _id: string | undefined = id;
   while (_id) {
-    const nodes: browser.bookmarks.BookmarkTreeNode[] = await browser.bookmarks.get(_id);
+    const nodes: browser.bookmarks.BookmarkTreeNode[] = await browser.bookmarks.get(
+      _id
+    );
     if (nodes.length === 0) break;
     _id = nodes[0].parentId;
     _id && path.unshift(nodes[0].id);
   }
   return path;
-}
+};
 
 export { bookmarkTree, bookmarkPath };

@@ -97,8 +97,15 @@ export class ViewModel {
         this.state = { ...this.state, showCascader: false };
       }
     }
-    if (isMessage(o, MsgType.BookmarkTreeSelection) && o.intention === "bookmark-tree")
-      this.state = { ...this.state, bookmarkTreeSelection: o.data, showCascader: true };
+    if (
+      isMessage(o, MsgType.BookmarkTreeSelection) &&
+      o.intention === "bookmark-tree"
+    )
+      this.state = {
+        ...this.state,
+        bookmarkTreeSelection: o.data,
+        showCascader: true
+      };
     if (isMessage(o, MsgType.TabCreateProps) && o.intention === "open-link")
       browser.tabs.create(o.data); // async
 

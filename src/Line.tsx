@@ -37,7 +37,11 @@ export class Line extends React.Component<LineProps> {
             />
           );
           const removeLink = (
-            <a className="remove icon icon-cross_mark" onClick={this.onRemove}>
+            <a
+              className="remove"
+              onClick={this.onRemove}
+              title={browser.i18n.getMessage("removeLink")}
+            >
               <Icon type="close" />
             </a>
           );
@@ -55,7 +59,7 @@ export class Line extends React.Component<LineProps> {
               <div className="line">
                 {removeLink}
                 {mainLink}
-                <span className="sourceConn icon icon-arrow_left">
+                <span className="sourceConn">
                   <Icon type="arrow-left" />
                 </span>
                 {sourceLink}

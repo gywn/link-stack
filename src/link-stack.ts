@@ -4,7 +4,7 @@ import { Line, AddDetails, Graph, Snapshot } from "./link-stack.d";
 
 export { Line, AddDetails, Graph, Snapshot };
 
-const DEFAULT_NAME = "Link Stack";
+const DEFAULT_NAME = browser.i18n.getMessage("extensionName");
 
 const emptyGraph = () => ({
   ids: [],

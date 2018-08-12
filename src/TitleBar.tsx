@@ -13,13 +13,6 @@ import "antd/lib/tooltip/style";
 import Modal from "antd/lib/modal";
 import "antd/lib/modal/style";
 
-const SET_ROOT_MSG = (
-  <span>
-    Link Stack takes over a folder to manage its data. All bookmarks in the said
-    folder will be kept.
-  </span>
-);
-
 export class TitleBar extends React.Component {
   model?: ViewModel;
 
@@ -33,7 +26,10 @@ export class TitleBar extends React.Component {
             <div className="root">
               <span className="rootTitle">{model.state.name}</span>
               <Divider type="vertical" />
-              <Tooltip title="Change Bookmark Folder" placement="bottom">
+              <Tooltip
+                title={browser.i18n.getMessage("changeBookmarkFolder")}
+                placement="bottom"
+              >
                 <a onClick={this.onClickChangeRoot}>
                   <Icon type="book" />
                 </a>
@@ -67,10 +63,16 @@ export class RootSelector extends React.Component<
           this.model = model;
           return (
             <Modal
-              title="Change Bookmark Folder"
-              visible={!!(model.state.showCascader && model.state.bookmarkTreeSelection)}
-              onOk={this.onClickConfirmRoot}
+              title={browser.i18n.getMessage("changeBookmarkFolder")}
+              visible={
+                !!(
+                  model.state.showCascader && model.state.bookmarkTreeSelection
+                )
+              }
+              okText={browser.i18n.getMessage("setRoot")}
+              cancelText={browser.i18n.getMessage("cancel")}
               okButtonProps={{ disabled: !this.state.rootId }}
+              onOk={this.onClickConfirmRoot}
               onCancel={this.onClickCancel}
             >
               <p>
@@ -83,7 +85,7 @@ export class RootSelector extends React.Component<
                   onChange={this.onSelectChange}
                 />
               </p>
-              <p>{SET_ROOT_MSG}</p>
+              <p>{browser.i18n.getMessage("changeBookmarkFolderDesc")}</p>
             </Modal>
           );
         }}

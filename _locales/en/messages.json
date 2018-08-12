@@ -1,0 +1,27 @@
+{
+  "extensionName": {
+    "message": "Link Stack"
+  },
+  "extensionDesc": {
+    "message": "Stack of links built on top of bookmarks to help you accelerate information processing"
+  },
+  "extensionTitle": {
+    "message": "$COUNT$ Links",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openLinkStack": { "message": "Open Link Stack" },
+  "pushLink": { "message": "Push to Link Stack" },
+  "pushActiveTabDesc": { "message": "Push the active tab and close it" },
+  "removeLink": { "message": "Remove Link" },
+  "confirm": { "message": "Confirm" },
+  "setRoot": { "message": "Change" },
+  "cancel": { "message": "Cancel" },
+  "changeBookmarkFolder": { "message": "Change Bookmark Folder" },
+  "changeBookmarkFolderDesc": {
+    "message": "Link Stack takes over a folder to manage its data. All bookmarks in the said folder will be kept."
+  }
+}

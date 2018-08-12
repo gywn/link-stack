@@ -113,7 +113,7 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
   });
 
   browser.contextMenus.create({
-    title: "Archive this link",
+    title: browser.i18n.getMessage("pushLink"),
     contexts: ["link"],
     onclick: () => rightClickInfo && stack.push(rightClickInfo)
   });

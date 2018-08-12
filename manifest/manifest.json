@@ -1,4 +1,9 @@
 {
+    "manifest_version": 2,
+    "default_locale": "en",
+    "name": "__MSG_extensionName__",
+    "description": "__MSG_extensionDesc__",
+    "version": "0.1",
     "background": {
         "scripts": ["background.js"]
     },
@@ -10,7 +15,7 @@
     },
     "commands": {
         "push-active-tab": {
-            "description": "Archive & close the current tab",
+            "description": "__MSG_pushActiveTabDesc__",
             "suggested_key": {"default": "Alt+Shift+2"}
         }
     },
@@ -23,9 +28,5 @@
         "48": "images/icon-48.png",
         "128": "images/icon-128.png"
     },
-    "description": "BiuBiu",
-    "manifest_version": 2,
-    "name": "Link Stack",
-    "permissions": ["tabs", "<all_urls>", "storage", "contextMenus", "bookmarks"],
-    "version": "0.1"
+    "permissions": ["tabs", "<all_urls>", "storage", "contextMenus", "bookmarks"]
 }

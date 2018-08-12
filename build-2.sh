@@ -1,7 +1,7 @@
 mkdir -p dist && \
 rm -rf dist/* && \
 
-cp manifest/manifest.json dist && \
+cp -r manifest/manifest.json _locales dist && \
 
 mkdir -p dist/images && \
 for i in 19 38 16 48 128
