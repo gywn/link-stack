@@ -1,6 +1,6 @@
 import { AddDetails, Snapshot } from "./link-stack.d";
 import { TabCreateProps } from "./view-model.d";
-import { CascaderOptionType } from "antd/lib/cascader";
+import {BookmarkTreeSelection} from "./bookmark-tree";
 
 export enum MsgType {
   Intention,
@@ -8,7 +8,7 @@ export enum MsgType {
   AddDetails,
   Snapshot,
   TabCreateProps,
-  BookmarkTree
+  BookmarkTreeSelection
 }
 
 export type Message<T extends MsgType> = T extends MsgType.Intention
@@ -27,8 +27,8 @@ export type Message<T extends MsgType> = T extends MsgType.Intention
             ? Snapshot
             : T extends MsgType.TabCreateProps
               ? TabCreateProps
-              : T extends MsgType.BookmarkTree
-                ? CascaderOptionType[] | null
+              : T extends MsgType.BookmarkTreeSelection
+                ? BookmarkTreeSelection | null
                 : never;
     };
 

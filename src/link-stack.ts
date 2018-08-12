@@ -39,13 +39,12 @@ const buildLine = (
   node: browser.bookmarks.BookmarkTreeNode,
   sourceIds?: Set<string>
 ): Line | null => {
-  if (node.type === "separator")
-    return Object.assign({ sourceId: null, score: 1 }, node);
+  if (node.type === "separator") return { sourceId: null, score: 1, ...node };
   if (node.type === "bookmark") {
     const { title, sourceId, score } = decodeTitle(node.title);
     if (sourceIds && sourceId && sourceId !== "hidden______")
       sourceIds.add(sourceId);
-    return Object.assign({}, node, { title, sourceId, score });
+    return { ...node, title, sourceId, score };
   }
   return null;
 };

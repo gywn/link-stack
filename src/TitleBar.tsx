@@ -33,7 +33,7 @@ export class TitleBar extends React.Component {
             <div className="root">
               <span className="rootTitle">{model.state.name}</span>
               <Divider type="vertical" />
-              <Tooltip title="Change Folder" placement="bottom">
+              <Tooltip title="Change Bookmark Folder" placement="bottom">
                 <a onClick={this.onClickChangeRoot}>
                   <Icon type="book" />
                 </a>
@@ -63,12 +63,12 @@ export class RootSelector extends React.Component<
     return (
       <Consumer>
         {(model: ViewModel | null) => {
-          if (!model) return;
+          if (!(model && model.state.bookmarkTreeSelection)) return;
           this.model = model;
           return (
             <Modal
-              title="Change Folder"
-              visible={!!(model.state.showCascader && model.state.bookmarkTree)}
+              title="Change Bookmark Folder"
+              visible={!!(model.state.showCascader && model.state.bookmarkTreeSelection)}
               onOk={this.onClickConfirmRoot}
               okButtonProps={{ disabled: !this.state.rootId }}
               onCancel={this.onClickCancel}
@@ -76,8 +76,10 @@ export class RootSelector extends React.Component<
               <p>
                 <Cascader
                   className="rootSelector"
-                  options={model.state.bookmarkTree || []}
+                  options={model.state.bookmarkTreeSelection.tree}
+                  defaultValue={model.state.bookmarkTreeSelection.path}
                   changeOnSelect
+                  allowClear={false}
                   onChange={this.onSelectChange}
                 />
               </p>
@@ -97,6 +99,7 @@ export class RootSelector extends React.Component<
 
   onClickConfirmRoot = () => {
     if (this.model && this.state.rootId) {
+      this.setState({ rootId: null });
       this.model.dispatch(
         createMessage<MsgType.Id>({
           intention: "set-root-id",

@@ -1,6 +1,6 @@
 import { Message, MsgType, isMessage, createIntention } from "./Message";
 import { Snapshot, emptyGraph } from "./link-stack";
-import { CascaderOptionType } from "antd/lib/cascader";
+import { BookmarkTreeSelection } from "./bookmark-tree";
 
 class Delayer {
   private _handle: number | null;
@@ -17,7 +17,7 @@ class Delayer {
 
 export interface ViewModelState extends Snapshot {
   unsyncedUpdate: boolean;
-  bookmarkTree: CascaderOptionType[] | null;
+  bookmarkTreeSelection: BookmarkTreeSelection | null;
   showCascader: boolean;
 }
 
@@ -35,7 +35,7 @@ export class ViewModel {
       graph: emptyGraph(),
       monotron: 0,
       unsyncedUpdate: true,
-      bookmarkTree: null,
+      bookmarkTreeSelection: null,
       showCascader: false
     };
     this._port = browser.runtime.connect({ name: "view" });
@@ -97,8 +97,8 @@ export class ViewModel {
         this.state = { ...this.state, showCascader: false };
       }
     }
-    if (isMessage(o, MsgType.BookmarkTree) && o.intention === "bookmark-tree")
-      this.state = { ...this.state, bookmarkTree: o.data, showCascader: true };
+    if (isMessage(o, MsgType.BookmarkTreeSelection) && o.intention === "bookmark-tree")
+      this.state = { ...this.state, bookmarkTreeSelection: o.data, showCascader: true };
     if (isMessage(o, MsgType.TabCreateProps) && o.intention === "open-link")
       browser.tabs.create(o.data); // async
 

@@ -1,0 +1,11 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": { "browsers": "last 2 Firefox versions" } }],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread"
+  ]
+}

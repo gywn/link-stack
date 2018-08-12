@@ -1,6 +1,6 @@
 import { MsgType, isMessage, createMessage } from "./Message";
 import { AddDetails, LinkStack } from "./link-stack";
-import { bookmarkTree } from "./bookmark-tree";
+import { bookmarkTree, bookmarkPath } from "./bookmark-tree";
 import * as store from "store2";
 
 interface View {
@@ -75,13 +75,17 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
         if (isMessage(o, MsgType.Intention)) {
           if (o.intention === "get-graph") updateView(view, stack);
           if (o.intention === "get-bookmark-tree") {
-            port.postMessage(
-              createMessage<MsgType.BookmarkTree>({
-                intention: "bookmark-tree",
-                type: MsgType.BookmarkTree,
-                data: await bookmarkTree()
-              })
-            );
+            const tree = await bookmarkTree();
+            const rootId = stack.getSnapshot().id;
+            if (tree && rootId) {
+              port.postMessage(
+                createMessage<MsgType.BookmarkTreeSelection>({
+                  intention: "bookmark-tree",
+                  type: MsgType.BookmarkTreeSelection,
+                  data: { tree, path: await bookmarkPath(rootId) }
+                })
+              );
+            }
           }
         }
         if (isMessage(o, MsgType.Id)) {

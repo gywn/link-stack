@@ -1,3 +1,5 @@
+import { createMessage, MsgType } from "./Message";
+
 document.addEventListener(
   "mousedown",
   e => {
@@ -10,8 +12,9 @@ document.addEventListener(
           let title = node.innerText;
           if (!title || title === "") title = url;
 
-          browser.runtime.sendMessage({
-            type: "cache-right-click-info",
+          browser.runtime.sendMessage(createMessage<MsgType.AddDetails>({
+            intention: "cache-right-click-info",
+            type: MsgType.AddDetails,
             data: {
               title,
               url,
@@ -20,7 +23,7 @@ document.addEventListener(
                 url: location.href
               }
             }
-          });
+          }));
           break;
         } else {
           node = node.parentNode;
