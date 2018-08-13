@@ -1,3 +1,4 @@
+import { browser } from "../lib/browser-polyfill";
 import { MsgType, isMessage, createMessage } from "./Message";
 import { AddDetails, LinkStack } from "./link-stack";
 import { bookmarkTree, bookmarkPath } from "./bookmark-tree";
@@ -52,6 +53,7 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
 };
 
 (async () => {
+  (window as any).wrappedBrowser = browser;
   const views: Map<browser.runtime.Port, View> = new Map();
   (window as any).views = views; // expose for debugging
 

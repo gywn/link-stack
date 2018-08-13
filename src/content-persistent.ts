@@ -1,5 +1,8 @@
 import { createMessage, MsgType } from "./Message";
 
+declare const browser: any;
+declare const chrome: any;
+
 document.addEventListener(
   "mousedown",
   e => {
@@ -12,7 +15,7 @@ document.addEventListener(
           let title = node.innerText;
           if (!title || title === "") title = url;
 
-          browser.runtime.sendMessage(
+          (browser || chrome).runtime.sendMessage(
             createMessage<MsgType.AddDetails>({
               intention: "cache-right-click-info",
               type: MsgType.AddDetails,

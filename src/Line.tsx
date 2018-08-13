@@ -1,3 +1,4 @@
+import { browser } from "../lib/browser-polyfill";
 import * as React from "react";
 import { MsgType, createMessage } from "./Message";
 import { Line as lsLine } from "./link-stack";
@@ -23,7 +24,7 @@ export class Line extends React.Component<LineProps> {
           if (!model) return;
           this.model = model;
           const graph = model.state.graph;
-          this.line = graph.lines.get(id);
+          this.line = graph.lines[id];
 
           if (!this.line || !this.line.url) {
             return;
@@ -46,7 +47,7 @@ export class Line extends React.Component<LineProps> {
             </a>
           );
           if (this.line.sourceId !== null) {
-            const source = graph.lines.get(this.line.sourceId);
+            const source = graph.lines[this.line.sourceId];
             if (!source || !source.url) return;
             const sourceLink = (
               <Link

@@ -1,3 +1,5 @@
+import { browser } from "../lib/browser-polyfill";
+
 export interface Line extends browser.bookmarks.BookmarkTreeNode {
   sourceId: string | null;
   score: number;
@@ -5,7 +7,7 @@ export interface Line extends browser.bookmarks.BookmarkTreeNode {
 
 export interface Graph {
   ids: string[];
-  lines: Map<string, Line>;
+  lines: { [id: string]: Line };
 }
 
 export interface AddDetails {

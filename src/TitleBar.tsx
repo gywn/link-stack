@@ -1,3 +1,4 @@
+import { browser } from "../lib/browser-polyfill";
 import * as React from "react";
 import { MsgType, createMessage, createIntention } from "./Message";
 import { ViewModel } from "./view-model";

@@ -1,22 +1,18 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "Node",
-        "lib": ["es2017", "dom"],
-        "jsx": "react",
-        "typeRoots": ["./node_modules/@types", "./web-ext-types"],  // global namespace
-        "types": ["react", "react-dom", "global"],
-        "strict": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "module": "es2015",
-        "target": "es2017",
-        "noEmit": true
-    },
-    "include": [
-        "./src/*.ts",
-        "./src/*.tsx"
-    ]
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "lib": ["es2017", "dom", "es2015.iterable"],
+    "jsx": "react",
+    "types": ["react", "react-dom"],
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "module": "es2015",
+    "target": "es2017",
+    "noEmit": true
+  },
+  "include": ["./src/*.ts", "./src/*.tsx", "./@types/*/*.d.ts"]
 }

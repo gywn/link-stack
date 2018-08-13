@@ -1,37 +1,35 @@
-import replace from 'rollup-plugin-replace';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import replace from "rollup-plugin-replace";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
 
-export default ['background', 'content-persistent', 'view'].map(basename => ({
+export default ["background", "content-persistent", "view"].map(basename => ({
   input: `.ts_temp/${basename}.js`,
   output: {
     file: `dist/${basename}.js`,
-    format: 'iife'
+    format: "iife"
   },
   plugins: [
     resolve(), // put node modules into import paths
     replace({
-      'process.env.NODE_ENV': JSON.stringify( 'production' )
+      "process.env.NODE_ENV": JSON.stringify("production")
     }),
     commonjs({
-      include: 'node_modules/**',
+      include: "node_modules/**",
       namedExports: {
-        'node_modules/react-dom/index.js': [
-          'render',
-          'findDOMNode',
-          'createPortal',
+        "node_modules/react-dom/index.js": [
+          "render",
+          "findDOMNode",
+          "createPortal"
         ],
-        'node_modules/react/index.js': [
-          'Component',
-          'PropTypes',
-          'createElement',
-          'cloneElement',
-          'createContext',
+        "node_modules/react/index.js": [
+          "Component",
+          "PropTypes",
+          "createElement",
+          "cloneElement",
+          "createContext"
         ],
-        'node_modules/store2/dist/store2.js': [
-          'local'
-        ]
+        "node_modules/store2/dist/store2.js": ["local"]
       }
-    }), // transform CommonJS format into ES6
+    }) // transform CommonJS format into ES6
   ]
 }));

@@ -1,3 +1,4 @@
+import { browser } from "../lib/browser-polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ViewModel } from "./view-model";

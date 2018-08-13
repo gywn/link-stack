@@ -1,3 +1,5 @@
+import { browser } from "../lib/browser-polyfill";
+import { mapObject, getBookmark } from "./util";
 import { Serial } from "./serial";
 import { StoreAPI } from "store2";
 import { Line, AddDetails, Graph, Snapshot } from "./link-stack.d";
@@ -6,9 +8,9 @@ export { Line, AddDetails, Graph, Snapshot };
 
 const DEFAULT_NAME = browser.i18n.getMessage("extensionName");
 
-const emptyGraph = () => ({
+const emptyGraph = (): Graph => ({
   ids: [],
-  lines: new Map()
+  lines: {}
 });
 
 export { emptyGraph };
@@ -39,8 +41,8 @@ const buildLine = (
   node: browser.bookmarks.BookmarkTreeNode,
   sourceIds?: Set<string>
 ): Line | null => {
-  if (node.type === "separator") return { sourceId: null, score: 1, ...node };
-  if (node.type === "bookmark") {
+  if (node.url) {
+    // not folder
     const { title, sourceId, score } = decodeTitle(node.title);
     if (sourceIds && sourceId && sourceId !== "hidden______")
       sourceIds.add(sourceId);
@@ -73,11 +75,11 @@ const buildGraph = async (
 
   // Modify links whose source is absent, and build correct indices
   // Due to the bug related to bookmark index, move() has to be called serially
-  const lines = new Map<string, Line>(
+  const lines = mapObject<Line>(
     orderedLines.map((l): [string, Line] => [l.id, l])
   );
   for (const [index, l] of orderedLines.entries()) {
-    if (l.sourceId && l.sourceId !== "hidden______" && !lines.has(l.sourceId)) {
+    if (l.sourceId && l.sourceId !== "hidden______" && !lines[l.sourceId]) {
       await browser.bookmarks.update(l.id, {
         title: encodeTitle({ title: l.title, sourceId: null })
       });
@@ -161,11 +163,11 @@ export class LinkStack {
       return newId;
     });
     await this._sync({ message: "push" });
-    return (newId && this._graph.lines.get(newId)) || null;
+    return (newId && this._graph.lines[newId]) || null;
   }
 
   async remove(id: string): Promise<void> {
-    const line = this._graph.lines.get(id);
+    const line = this._graph.lines[id];
     if (!line || line.sourceId === "hidden______") return;
     const title = encodeTitle({ title: line.title, sourceId: "hidden______" });
     await this._serial.run(async () => {
@@ -181,17 +183,16 @@ export class LinkStack {
       (opt && opt.id) || (this._store && this._store.get("rootId"));
     await this._serial.run(async () => {
       const folders = (_id
-        ? await browser.bookmarks.get(_id)
+        ? await getBookmark(_id)
         : await browser.bookmarks.search({
             title: (opt && opt.name) || DEFAULT_NAME
           })
-      ).filter(n => n.type === "folder");
+      ).filter(n => !n.url); // is folder
       this._root =
         folders.length > 0
           ? folders[0]
           : await browser.bookmarks.create({
-              title: DEFAULT_NAME,
-              type: "folder"
+              title: DEFAULT_NAME
             });
       if (this._store) this._store.set("rootId", this._root.id);
       this._monotron++;
@@ -219,14 +220,19 @@ export class LinkStack {
 
   private async _syncRoot(): Promise<void> {
     if (!this._root) return;
-    const root = (await browser.bookmarks.get(this._root.id))[0];
-    this._root = root;
+    const root = await getBookmark(this._root.id);
+    if (root.length === 0) {
+      this._root = null;
+    } else {
+      this._root = root[0];
+    }
   }
 
   private _heartBeat = async () => {
     if (!this._root) return;
-    const root = (await browser.bookmarks.get(this._root.id))[0];
-    if (root.dateGroupModified !== this._root.dateGroupModified)
+    const root = await getBookmark(this._root.id);
+    if (root.length === 0) return;
+    if (root[0].dateGroupModified !== this._root.dateGroupModified)
       this._monotron++;
     this._sync({ message: "heart-heat" });
   };
@@ -245,7 +251,7 @@ export class LinkStack {
     if (!this._root) return null;
     const matched = <Line[]>(
       (await browser.bookmarks.search({ url }))
-        .map(node => this._graph.lines.get(node.id))
+        .map(node => this._graph.lines[node.id])
         .filter(l => l)
     );
     // const matched = [...this._graph.lines.values()].filter(l => l.url === url);
@@ -254,7 +260,7 @@ export class LinkStack {
         url: url,
         title: encodeTitle({ title, sourceId }),
         parentId: this._root.id,
-        index: this._graph.lines.size
+        index: Object.getOwnPropertyNames(this._graph.lines).length
       });
       console.log("BOOKMARK_CREATE", encodeTitle({ title, sourceId }));
       return inserted.id;
@@ -265,7 +271,9 @@ export class LinkStack {
         url,
         title: encodeTitle({ title, sourceId: newSourceId })
       });
-      await browser.bookmarks.move(l.id, { index: this._graph.lines.size });
+      await browser.bookmarks.move(l.id, {
+        index: Object.getOwnPropertyNames(this._graph.lines).length
+      });
       console.log("BOOKMARK_UPDATE", encodeTitle({ title, sourceId }));
       return l.id;
     }
