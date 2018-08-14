@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     background: __dirname + "/src/background.ts",
-    "content-persistent": __dirname + "/src/content-persistent.ts",
     view: __dirname + "/src/view.tsx"
   },
   output: { path: __dirname + "/dist", filename: "[name].js" },

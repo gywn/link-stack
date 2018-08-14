@@ -15,6 +15,10 @@
   }
 }
 
+.secondaryLink {
+  color: @text-color-secondary;
+}
+
 body {
   margin: 0;
   background-color: @layout-body-background;
@@ -64,22 +68,25 @@ body {
 
 .root {
   display: flex;
-  padding-left: @large-gap;
+  padding: 0 @large-gap;
   height: 16px;
 
+  justify-content: space-between;
   align-items: center;
-}
-
-.rootSelector {
-  margin-right: @gap;
-  // margin: 0 @gap 0 @block-height + @gap;
-  width: 100%;
 }
 
 .rootTitle {
   font-size: @font-size-lg;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   line-height: @font-size-lg;
+}
+
+.rootSelector {
+  width: 100%;
+}
+
+.elasticSpace {
+  flex-grow: 1;
 }
 
 .line {

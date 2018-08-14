@@ -7,24 +7,22 @@
   },
   "extensionTitle": {
     "message": "$COUNT$ 链接",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "placeholders": { "count": { "content": "$1" } }
   },
-  "emptyLinkText": {
-    "message": "链接"
-  },
+  "emptyLinkText": { "message": "链接" },
   "openLinkStack": { "message": "打开 Link Stack" },
-  "pushLink": { "message": "推至 Link Stack" },
-  "pushActiveTabDesc": { "message": "将当前页面推至栈顶并关闭" },
+  "pushLink": { "message": "存入 Link Stack" },
+  "pushActiveTabDesc": { "message": "保存当前页面并关闭页面" },
   "removeLink": { "message": "删除链接" },
   "confirm": { "message": "确认" },
-  "setRoot": { "message": "设置" },
+  "setRoot": { "message": "更换" },
   "cancel": { "message": "取消" },
-  "changeBookmarkFolder": { "message": "设置书签文件夹" },
+  "changeBookmarkFolder": { "message": "更换书签文件夹" },
   "changeBookmarkFolderDesc": {
-    "message": "Link Stack 需要一个书签文件夹来储存数据。该书签文件夹中的书签会被完整保留。"
+    "message": "Link Stack 需要接管一个书签文件夹来储存自身的数据。被选中的文件夹中的书签会被完整保留。"
+  },
+  "help": { "message": "帮助" },
+  "helpText": {
+    "message": "Link Stack 是一个简单的插件，它只支持三种操作：</br>1. 按快捷键 Alt + Shift + 2 将当前页面存入 Link Stack；</br>2. 右键菜单「存入 Link Stack」将超链接存入 Link Stack；</br>3. 点击 Link Stack 中保存的链接将之删除并在新页面中打开。"
   }
 }

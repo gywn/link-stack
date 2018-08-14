@@ -16,10 +16,17 @@ class Delayer {
   }
 }
 
+export enum ModalState {
+  None,
+  RootSelector,
+  HelpPanel
+}
+
 export interface ViewModelState extends Snapshot {
   unsyncedUpdate: boolean;
   bookmarkTreeSelection: BookmarkTreeSelection | null;
-  showCascader: boolean;
+
+  modal: ModalState;
 }
 
 export class ViewModel {
@@ -37,7 +44,7 @@ export class ViewModel {
       monotron: 0,
       unsyncedUpdate: true,
       bookmarkTreeSelection: null,
-      showCascader: false
+      modal: ModalState.None
     };
     this._port = browser.runtime.connect({ name: "view" });
     this._listeners = [];
@@ -66,10 +73,12 @@ export class ViewModel {
         this._port.postMessage(createIntention("get-graph"));
       if (o.intention === "get-bookmark-tree") {
         this._port.postMessage(o);
-        this.state = { ...this.state, showCascader: true };
+        // this.state = { ...this.state, modal: true };
       }
-      if (o.intention === "hide-cascader") {
-        this.state = { ...this.state, showCascader: false };
+      if (o.intention === "show-help-panel")
+        this.state = { ...this.state, modal: ModalState.HelpPanel };
+      if (o.intention === "hide-modal") {
+        this.state = { ...this.state, modal: ModalState.None };
       }
     }
     if (isMessage(o, MsgType.Snapshot)) {
@@ -95,7 +104,7 @@ export class ViewModel {
       }
       if (o.intention === "set-root-id") {
         this._port.postMessage(o);
-        this.state = { ...this.state, showCascader: false };
+        this.state = { ...this.state, modal: ModalState.None };
       }
     }
     if (
@@ -105,7 +114,7 @@ export class ViewModel {
       this.state = {
         ...this.state,
         bookmarkTreeSelection: o.data,
-        showCascader: true
+        modal: ModalState.RootSelector
       };
     if (isMessage(o, MsgType.TabCreateProps) && o.intention === "open-link")
       browser.tabs.create(o.data); // async

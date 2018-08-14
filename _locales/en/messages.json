@@ -7,24 +7,22 @@
   },
   "extensionTitle": {
     "message": "$COUNT$ Links",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "placeholders": { "count": { "content": "$1" } }
   },
-  "emptyLinkText": {
-    "message": "Link"
-  },
+  "emptyLinkText": { "message": "Link" },
   "openLinkStack": { "message": "Open Link Stack" },
-  "pushLink": { "message": "Push to Link Stack" },
-  "pushActiveTabDesc": { "message": "Push the active tab and close it" },
+  "pushLink": { "message": "Save to Link Stack" },
+  "pushActiveTabDesc": { "message": "Save the active tab and close it" },
   "removeLink": { "message": "Remove Link" },
   "confirm": { "message": "Confirm" },
   "setRoot": { "message": "Change" },
   "cancel": { "message": "Cancel" },
   "changeBookmarkFolder": { "message": "Change Bookmark Folder" },
   "changeBookmarkFolderDesc": {
-    "message": "Link Stack takes over a folder to manage its data. All bookmarks in the said folder will be kept."
+    "message": "Link Stack takes over a folder to manage its data. All bookmarks in the chosen folder will be kept."
+  },
+  "help": { "message": "Help" },
+  "helpText": {
+    "message": "Link Stack is a simple extension. It only supports three operations:<br/> 1. Use keyboard shortcut \"Alt + Shift + 2\" to save the current page into Link Stack;<br/> 2. Use the right-click menu \"Save to Link Stack\" to save the link into Link Stack;<br/> 3. Click a saved link in Link Stack to delete it and open it in a new tab."
   }
 }
