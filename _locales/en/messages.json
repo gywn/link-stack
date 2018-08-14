@@ -13,6 +13,9 @@
       }
     }
   },
+  "emptyLinkText": {
+    "message": "Link"
+  },
   "openLinkStack": { "message": "Open Link Stack" },
   "pushLink": { "message": "Push to Link Stack" },
   "pushActiveTabDesc": { "message": "Push the active tab and close it" },

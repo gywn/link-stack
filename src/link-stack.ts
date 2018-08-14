@@ -2,11 +2,16 @@ import { browser } from "../lib/browser-polyfill";
 import { mapObject, getBookmark } from "./util";
 import { Serial } from "./serial";
 import { StoreAPI } from "store2";
-import { Line, AddDetails, Graph, Snapshot } from "./link-stack.d";
+import { Line, pushDetails, Graph, Snapshot } from "./link-stack.d";
 
-export { Line, AddDetails, Graph, Snapshot };
+export { Line, pushDetails, Graph, Snapshot };
 
 const DEFAULT_NAME = browser.i18n.getMessage("extensionName");
+const HIDDEN_ID = "hidden______";
+// Firefox's id matches [0-9a-zA-Z_-]{12}, Chromium's id matches \d+
+const ENCODED_TITLE_PATTERN = new RegExp(
+  `(.*) ← (${HIDDEN_ID}|[0-9a-zA-Z_-]{12}|\\d+)$`
+);
 
 const emptyGraph = (): Graph => ({
   ids: [],
@@ -18,13 +23,13 @@ export { emptyGraph };
 const decodeTitle = (
   encoded: string
 ): { title: string; sourceId: string | null; score: number } => {
-  const m = encoded.match(/(.*) ← (hidden______|[0-9a-zA-Z_-]{12})$/);
+  const m = encoded.match(ENCODED_TITLE_PATTERN);
   if (!m) return { title: encoded, sourceId: null, score: 1 };
   else {
     return {
       title: m[1],
       sourceId: m[2],
-      score: m[2] === "hidden______" ? 0 : 2
+      score: m[2] === HIDDEN_ID ? 0 : 2
     };
   }
 };
@@ -44,7 +49,7 @@ const buildLine = (
   if (node.url) {
     // not folder
     const { title, sourceId, score } = decodeTitle(node.title);
-    if (sourceIds && sourceId && sourceId !== "hidden______")
+    if (sourceIds && sourceId && sourceId !== HIDDEN_ID)
       sourceIds.add(sourceId);
     return { ...node, title, sourceId, score };
   }
@@ -62,7 +67,7 @@ const buildGraph = async (
   const orderedLines = <Line[]>(
     nodes.map(n => buildLine(n, sourceIds)).filter(l => {
       if (l === null) return false;
-      if (l.sourceId === "hidden______" && !sourceIds.has(l.id)) {
+      if (l.sourceId === HIDDEN_ID && !sourceIds.has(l.id)) {
         danglingHiddenIds.push(l.id);
         return false;
       }
@@ -79,7 +84,7 @@ const buildGraph = async (
     orderedLines.map((l): [string, Line] => [l.id, l])
   );
   for (const [index, l] of orderedLines.entries()) {
-    if (l.sourceId && l.sourceId !== "hidden______" && !lines[l.sourceId]) {
+    if (l.sourceId && l.sourceId !== HIDDEN_ID && !lines[l.sourceId]) {
       await browser.bookmarks.update(l.id, {
         title: encodeTitle({ title: l.title, sourceId: null })
       });
@@ -92,7 +97,7 @@ const buildGraph = async (
   }
 
   const ids = orderedLines
-    .filter(l => l.sourceId !== "hidden______")
+    .filter(l => l.sourceId !== HIDDEN_ID)
     .map(l => l.id)
     .reverse();
 
@@ -142,14 +147,14 @@ export class LinkStack {
     };
   }
 
-  async push({ url, title, source = null }: AddDetails): Promise<Line | null> {
+  async push({ url, title, source = null }: pushDetails): Promise<Line | null> {
     const newId = await this._serial.run(async () => {
       const sourceId = !source
         ? null
         : await this._pushWithId({
             url: source.url,
             title: source.title,
-            sourceId: "hidden______",
+            sourceId: HIDDEN_ID,
             score: 0
           });
       const score = !source ? 1 : 2;
@@ -168,8 +173,8 @@ export class LinkStack {
 
   async remove(id: string): Promise<void> {
     const line = this._graph.lines[id];
-    if (!line || line.sourceId === "hidden______") return;
-    const title = encodeTitle({ title: line.title, sourceId: "hidden______" });
+    if (!line || line.sourceId === HIDDEN_ID) return;
+    const title = encodeTitle({ title: line.title, sourceId: HIDDEN_ID });
     await this._serial.run(async () => {
       await browser.bookmarks.update(id, { title });
       this._monotron++;

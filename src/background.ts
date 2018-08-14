@@ -1,6 +1,6 @@
 import { browser } from "../lib/browser-polyfill";
 import { MsgType, isMessage, createMessage } from "./Message";
-import { AddDetails, LinkStack } from "./link-stack";
+import { LinkStack } from "./link-stack";
 import { bookmarkTree, bookmarkPath } from "./bookmark-tree";
 import * as store from "store2";
 
@@ -53,7 +53,8 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
 };
 
 (async () => {
-  (window as any).wrappedBrowser = browser;
+  (window as any).wrappedBrowser = browser; // expose for debugging
+
   const views: Map<browser.runtime.Port, View> = new Map();
   (window as any).views = views; // expose for debugging
 
@@ -64,9 +65,7 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
   (window as any).stack = stack; // expose for debugging
   await stack.setRoot();
 
-  (window as any).store = store;
-
-  let rightClickInfo: AddDetails | null = null;
+  (window as any).store = store; // expose for debugging
 
   browser.runtime.onConnect.addListener(port => {
     if (port.name === "view") {
@@ -106,18 +105,24 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
     port.onDisconnect.addListener(() => views.delete(port));
   });
 
-  browser.runtime.onMessage.addListener((o: object) => {
-    if (
-      isMessage(o, MsgType.AddDetails) &&
-      o.intention === "cache-right-click-info"
-    )
-      rightClickInfo = o.data;
-  });
-
   browser.contextMenus.create({
     title: browser.i18n.getMessage("pushLink"),
     contexts: ["link"],
-    onclick: () => rightClickInfo && stack.push(rightClickInfo)
+    onclick: (click, tab) => {
+      // linkText is a Firefox-only property. Chromium auto select link's text.
+      if (!(click.linkUrl && tab.title && tab.url)) return;
+      const title: string | undefined =
+        (click as any).linkText || click.selectionText;
+      const details = {
+        url: click.linkUrl,
+        title: !title || title === "" ? click.linkUrl : title,
+        source: {
+          url: tab.url,
+          title: tab.title
+        }
+      };
+      stack.push(details);
+    }
   });
 
   browser.browserAction.onClicked.addListener(cmdActivateView);

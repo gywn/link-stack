@@ -4,8 +4,8 @@
   "description": "Link Stack",
   "main": "",
   "scripts": {
-    "build": "tsc --noEmit && webpack --mode production",
-    "watch": "tsc --noEmit && webpack --watch --mode development"
+    "build": "tsc && webpack --mode production",
+    "watch": "tsc && webpack --watch --mode development"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
@@ -19,6 +19,7 @@
     "antd": "^3.8.0",
     "babel-loader": "^8.0.0-beta.4",
     "css-loader": "^1.0.0",
+    "glob": "^7.1.2",
     "html-webpack-plugin": "^3.2.0",
     "indexof": "0.0.1",
     "less": "^3.8.1",
@@ -26,16 +27,11 @@
     "mini-css-extract-plugin": "^0.4.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "rollup": "^0.63.5",
-    "rollup-plugin-commonjs": "^9.1.4",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-replace": "^2.0.0",
     "store2": "^2.7.0",
     "style-loader": "^0.22.1",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0",
-    "webpack-shell-plugin": "^0.5.0"
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {}
 }

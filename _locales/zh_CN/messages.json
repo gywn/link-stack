@@ -13,6 +13,9 @@
       }
     }
   },
+  "emptyLinkText": {
+    "message": "链接"
+  },
   "openLinkStack": { "message": "打开 Link Stack" },
   "pushLink": { "message": "推至 Link Stack" },
   "pushActiveTabDesc": { "message": "将当前页面推至栈顶并关闭" },

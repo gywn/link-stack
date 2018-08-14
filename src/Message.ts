@@ -1,11 +1,10 @@
-import { AddDetails, Snapshot } from "./link-stack.d";
+import { Snapshot } from "./link-stack.d";
 import { TabCreateProps } from "./view-model.d";
 import { BookmarkTreeSelection } from "./bookmark-tree";
 
 export enum MsgType {
   Intention,
   Id,
-  AddDetails,
   Snapshot,
   TabCreateProps,
   BookmarkTreeSelection
@@ -21,15 +20,13 @@ export type Message<T extends MsgType> = T extends MsgType.Intention
       type: T;
       data: T extends MsgType.Id
         ? string
-        : T extends MsgType.AddDetails
-          ? AddDetails
-          : T extends MsgType.Snapshot
-            ? Snapshot
-            : T extends MsgType.TabCreateProps
-              ? TabCreateProps
-              : T extends MsgType.BookmarkTreeSelection
-                ? BookmarkTreeSelection | null
-                : never;
+        : T extends MsgType.Snapshot
+          ? Snapshot
+          : T extends MsgType.TabCreateProps
+            ? TabCreateProps
+            : T extends MsgType.BookmarkTreeSelection
+              ? BookmarkTreeSelection | null
+              : never;
     };
 
 const isMessage = <T extends MsgType>(

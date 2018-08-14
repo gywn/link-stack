@@ -19,16 +19,10 @@
       "suggested_key": { "default": "Alt+Shift+2" }
     }
   },
-  "content_scripts": [
-    {
-      "js": ["content-persistent.js"],
-      "matches": ["<all_urls>"]
-    }
-  ],
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
-  "permissions": ["tabs", "<all_urls>", "storage", "contextMenus", "bookmarks"]
+  "permissions": ["tabs", "storage", "bookmarks", "contextMenus"]
 }

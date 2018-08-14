@@ -1,5 +1,5 @@
 const path = require("path");
-const WebpackShellPlugin = require("webpack-shell-plugin");
+const { WebpackMakefilePlugin } = require("./lib/webpack-makefile-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -11,8 +11,12 @@ module.exports = {
   },
   output: { path: __dirname + "/dist", filename: "[name].js" },
   plugins: [
-    new WebpackShellPlugin({
-      onBuildStart: ["bash build-2.sh"]
+    new WebpackMakefilePlugin({
+      watchFiles: [
+        "manifest/manifest.json",
+        "_locales/*/messages.json",
+        "images/icon.svg"
+      ]
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({

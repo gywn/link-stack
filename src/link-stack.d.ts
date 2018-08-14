@@ -10,7 +10,7 @@ export interface Graph {
   lines: { [id: string]: Line };
 }
 
-export interface AddDetails {
+export interface pushDetails {
   url: string;
   title: string;
   source: { url: string; title: string } | null;
