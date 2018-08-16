@@ -1,12 +1,12 @@
 import { StoreAPI } from "store2";
 
 import { browser } from "../lib/browser-polyfill";
-import { Graph, Line, Snapshot, pushDetails } from "./link-stack.d";
+import { bookmarks } from "./bookmarks";
+import { emptyGraph } from "./emptyGraph";
+import { Graph, Line, Snapshot, pushDetails } from "./link-stack.h";
 import { Serial } from "./serial";
 import * as texts from "./texts";
-import { bookmarks, mapObject } from "./util";
-
-export { Line, pushDetails, Graph, Snapshot };
+import { mapObject } from "./util";
 
 const DEFAULT_NAME = texts.extName;
 const HIDDEN_ID = "hidden______";
@@ -14,13 +14,6 @@ const HIDDEN_ID = "hidden______";
 const ENCODED_TITLE_PATTERN = new RegExp(
   `(.*) ← (${HIDDEN_ID}|[0-9a-zA-Z_-]{12}|\\d+)$`
 );
-
-const emptyGraph = (): Graph => ({
-  ids: [],
-  lines: {}
-});
-
-export { emptyGraph };
 
 const decodeTitle = (
   encoded: string

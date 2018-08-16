@@ -1,7 +1,8 @@
 import { browser } from "../lib/browser-polyfill";
-import { BookmarkTreeSelection } from "./bookmark-tree";
-import { Snapshot, emptyGraph } from "./link-stack";
-import { Message, MsgType, createIntention, isMessage } from "./Message";
+import { BookmarkTreeSelection } from "./bookmark-tree.h";
+import { emptyGraph } from "./emptyGraph";
+import { Snapshot } from "./link-stack.h";
+import { Message, MsgType, createIntention, isMessage } from "./message";
 
 class Delayer {
   private _handle: number | null;

@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import { Consumer } from "./context";
+import { helpMessages } from "./helpMessages";
 import { Line } from "./Line";
 import * as texts from "./texts";
 import { TitleBar } from "./TitleBar";
-import { helpMessages } from "./util-widgets";
 import { ViewModel } from "./view-model";
 
 export class LinkStack extends React.Component {

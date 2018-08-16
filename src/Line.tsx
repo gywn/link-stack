@@ -5,8 +5,8 @@ import * as React from "react";
 
 import { Consumer } from "./context";
 import { Link } from "./Link";
-import { Line as lsLine } from "./link-stack";
-import { MsgType, createMessage } from "./Message";
+import { Line as lsLine } from "./link-stack.h";
+import { MsgType, createMessage } from "./message";
 import * as texts from "./texts";
 import { ViewModel } from "./view-model";
 
@@ -94,6 +94,7 @@ export class Line extends React.Component<LineProps> {
 
   onOpen = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log(e.metaKey);
     if (this.model && this.line && this.line.url)
       this.model.dispatch(
         createMessage<MsgType.TabCreateProps>({

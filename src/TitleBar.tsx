@@ -9,7 +9,7 @@ import * as React from "react";
 
 import { Consumer } from "./context";
 import { HelpPanel } from "./HelpPanel";
-import { createIntention } from "./Message";
+import { createIntention } from "./message";
 import { RootSelector } from "./RootSelector";
 import * as texts from "./texts";
 import { ViewModel } from "./view-model";

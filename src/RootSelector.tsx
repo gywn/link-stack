@@ -6,7 +6,7 @@ import Modal from "antd/lib/modal";
 import * as React from "react";
 
 import { Consumer } from "./context";
-import { MsgType, createIntention, createMessage } from "./Message";
+import { MsgType, createIntention, createMessage } from "./message";
 import * as texts from "./texts";
 import { ModalState, ViewModel } from "./view-model";
 

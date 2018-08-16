@@ -4,9 +4,9 @@ import Modal from "antd/lib/modal";
 import * as React from "react";
 
 import { Consumer } from "./context";
-import { createIntention } from "./Message";
+import { helpMessages } from "./helpMessages";
+import { createIntention } from "./message";
 import * as texts from "./texts";
-import { helpMessages } from "./util-widgets";
 import { ModalState, ViewModel } from "./view-model";
 
 export class HelpPanel extends React.Component<{}, { rootId: string | null }> {

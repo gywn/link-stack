@@ -1,6 +1,6 @@
-import { BookmarkTreeSelection } from "./bookmark-tree";
-import { Snapshot } from "./link-stack.d";
-import { TabCreateProps } from "./view-model.d";
+import { BookmarkTreeSelection } from "./bookmark-tree.h";
+import { Snapshot } from "./link-stack.h";
+import { TabCreateProps } from "./view-model.h";
 
 export enum MsgType {
   Intention,

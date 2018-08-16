@@ -1,15 +1,11 @@
 import * as store from "store2";
 
 import { browser } from "../lib/browser-polyfill";
+import { View } from "./background.h";
 import { bookmarkPath, bookmarkTree } from "./bookmark-tree";
 import { LinkStack } from "./link-stack";
-import { MsgType, createMessage, isMessage } from "./Message";
+import { MsgType, createMessage, isMessage } from "./message";
 import * as texts from "./texts";
-
-interface View {
-  port: browser.runtime.Port;
-  monotron: number;
-}
 
 const updateView = (view: View, stack: LinkStack) => {
   const ss = stack.getSnapshot();

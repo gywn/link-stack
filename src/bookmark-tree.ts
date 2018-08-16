@@ -1,12 +1,7 @@
 import { CascaderOptionType } from "antd/lib/cascader";
 
 import { browser } from "../lib/browser-polyfill";
-import { bookmarks } from "./util";
-
-export interface BookmarkTreeSelection {
-  tree: CascaderOptionType[];
-  path: string[];
-}
+import { bookmarks } from "./bookmarks";
 
 const transformBookmarkTreeNode = (
   node: browser.bookmarks.BookmarkTreeNode
