@@ -21,6 +21,6 @@ dist: | .build-tag
 	mkdir -p dist/images
 	for i in 16 24 32 48 96 128; \
 	do \
-		convert -background none -resize $${i}x-1 -unsharp 1.5x1+0.3 $^ dist/images/icon-$${i}.png; \
+		convert -background none -resize $${i}x-1 -unsharp 1.5x1+0.2 $^ dist/images/icon-$${i}.png; \
 	done
 	touch $@
