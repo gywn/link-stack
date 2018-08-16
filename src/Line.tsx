@@ -1,12 +1,14 @@
-import { browser } from "../lib/browser-polyfill";
-import * as React from "react";
-import { MsgType, createMessage } from "./Message";
-import { Line as lsLine } from "./link-stack";
-import { ViewModel } from "./view-model";
-import { Consumer } from "./context";
-import Icon from "antd/lib/icon";
 import "antd/lib/icon/style";
+
+import Icon from "antd/lib/icon";
+import * as React from "react";
+
+import { Consumer } from "./context";
 import { Link } from "./Link";
+import { Line as lsLine } from "./link-stack";
+import { MsgType, createMessage } from "./Message";
+import * as texts from "./texts";
+import { ViewModel } from "./view-model";
 
 interface LineProps {
   id: string;
@@ -41,7 +43,7 @@ export class Line extends React.Component<LineProps> {
             <a
               className="remove"
               onClick={this.onRemove}
-              title={browser.i18n.getMessage("removeLink")}
+              title={texts.removeLink}
             >
               <Icon type="close" />
             </a>

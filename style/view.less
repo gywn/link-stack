@@ -1,4 +1,6 @@
 @import "~antd/lib/style/themes/default";
+@import "~antd/lib/tag/style/index";
+@import "~antd/lib/divider/style/index";
 
 @gap: 4px; /* even */
 @border-width: @outline-width;
@@ -15,190 +17,207 @@
   }
 }
 
+* {
+  flex-shrink: 0;
+}
+
 .secondaryLink {
   color: @text-color-secondary;
 }
 
-body {
-  margin: 0;
-  background-color: @layout-body-background;
-  /*   font-family: -apple-system, sans-serif; */
-}
-
-@media (min-width: 800px) {
-  .linkStack {
-    margin: @large-gap auto;
-    max-width: 800px;
-    border-radius: @gap;
-  }
-}
-
-@media (max-width: 799px) {
-  .linkStack {
-    margin: 0;
-  }
-
-  .linkStack:not(:last-of-type) {
-    margin-bottom: @large-gap;
-  }
-}
-
-.linkStack {
-  position: relative;
-  padding: @large-gap 0;
-  background-color: @layout-sider-background-light;
-  /*     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
-}
-
-.syncIndicator {
-  position: absolute;
-  top: @text-height;
-  right: @text-height;
-  width: @text-height;
-  height: @text-height;
-  border-radius: @text-height / 2;
-  background-color: @primary-color;
-  opacity: 1;
-  animation: blinker .5s linear infinite;
-}
-
-.syncIndicator.hidden {
-  visibility: hidden;
-}
-
-.root {
+#linkStack {
   display: flex;
-  padding: 0 @large-gap;
-  height: 16px;
+  flex-direction: column;
+  padding: @large-gap;
+  padding-bottom: 16px;
+  min-height: 100%;
+  background-color: @background-color-base;
 
-  justify-content: space-between;
   align-items: center;
-}
+  justify-content: space-between;
 
-.rootTitle {
-  font-size: @font-size-lg;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  line-height: @font-size-lg;
+  @media (max-width: 799px) {
+    & {
+      padding-top: 0;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  .linkStackContent {
+    position: relative;
+    margin-bottom: @large-gap;
+    padding-bottom: @large-gap;
+    width: calc(800px - 2 * @large-gap);
+    border-radius: @gap;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+
+    @media (max-width: 799px) {
+      & {
+        width: 100%;
+        border-radius: 0;
+      }
+    }
+
+    .syncIndicator {
+      position: absolute;
+      top: @text-height;
+      right: @text-height;
+      width: @text-height;
+      height: @text-height;
+      border-radius: @text-height / 2;
+      background-color: @primary-color;
+      opacity: 1;
+      animation: blinker .5s linear infinite;
+
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+
+    .titleBar {
+      display: flex;
+      margin-bottom: @large-gap;
+      padding: 16px @large-gap;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+
+      justify-content: space-between;
+      align-items: center;
+
+      .rootTitle {
+        font-weight: 500;
+        font-size: @font-size-lg;
+        line-height: @font-size-lg;
+      }
+
+      .elasticSpace {
+        flex-grow: 1;
+      }
+    }
+
+    .innerLinkStack {
+      overflow: hidden;
+      margin: 0 @large-gap;
+
+      .line {
+        display: flex;
+        font-weight: 500;
+        font-size: @text-height;
+        line-height: @text-height;
+
+        align-items: center;
+
+        &:not(:last-of-type) {
+          margin-bottom: @gap;
+        }
+
+        .link {
+          display: flex;
+          border: @border-width solid var(--link-bg);
+          border-radius: @border-radius-base;
+          background-color: var(--link-bg);
+          text-decoration: none;
+
+          flex-shrink: 1;
+          --link-bg: @primary-color;
+
+          &:hover {
+            --link-bg: @primary-5;
+          }
+
+          &.mainLink {
+            max-width: calc(100% - @block-height - @gap);
+          }
+
+          &.sourceLink {
+            max-width: 200px;
+          }
+
+          .faviconWrapper {
+            display: flex;
+            margin-right: @border-width;
+            width: @content-height;
+            height: @content-height;
+            border-radius: @border-radius-base - @border-width;
+            background-color: white;
+
+            align-items: center;
+            justify-content: center;
+          }
+
+          .linkText {
+            overflow: hidden;
+            padding: (@content-height - @text-height) / 2;
+            color: white;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            flex-shrink: 1;
+          }
+        }
+
+        .sourceConn, .remove {
+          padding: (@content-height - @text-height) / 2;
+          width: @block-height;
+          height: @block-height;
+          border: @border-width solid transparent;
+          color: @text-color;
+          text-align: center;
+          transition: none; // overwrite antd/lib/style/core/base.less
+          /*     background-color: lightcoral; */
+        }
+
+        .remove {
+          margin-right: @gap;
+          border-radius: @block-height / 2;
+          cursor: pointer;
+
+          flex-shrink: 0;
+        }
+
+        .remove:hover {
+          background-color: @error-color;
+          color: @btn-primary-color;
+        }
+      }
+    }
+
+    .innerLinkStackInfo {
+      margin: 0 auto;
+      padding: 0 @large-gap;
+      max-width: 520px;  // Ant Design Modal's default width
+      color: @text-color-secondary;
+    }
+  }
+
+  .footer {
+    a, {
+      color: @text-color-secondary;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .@{divider-prefix-cls} {
+      background-color: @text-color-secondary;
+    }
+  }
 }
 
 .rootSelector {
   width: 100%;
 }
 
-.elasticSpace {
-  flex-grow: 1;
+span.danger {
+  color: @error-color;
 }
 
-.line {
-  display: flex;
-  margin: 0 @large-gap;
-  font-weight: 500;
-  font-size: @text-height;
-  line-height: @text-height;
-
-  align-items: center;
+span.process {
+  color: @processing-color;
 }
 
-.line:not(:last-of-type) {
-  margin-bottom: @gap;
+span.keyboardCombination > .@{tag-prefix-cls} {
+  margin-right: 0;
 }
-
-.root + .line {
-  margin-top: @large-gap;
-}
-
-.line > * {
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-.link {
-  display: flex;
-  border: @border-width solid var(--link-bg);
-  border-radius: @border-radius-base;
-  background-color: var(--link-bg);
-  text-decoration: none;
-
-  flex-shrink: 1;
-  --link-bg: @primary-color;
-}
-
-.link:hover {
-  --link-bg: @primary-5;
-}
-
-.link > * {
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-@media (min-width: 800px) {
-  .mainLink {
-    max-width: 400px;
-  }
-}
-
-@media (max-width: 799px) {
-  .mainLink {
-    max-width: calc(100vw - 2 * @large-gap - @block-height - @gap);
-  }
-}
-
-.sourceLink {
-  max-width: 200px;
-}
-
-.faviconWrapper {
-  display: flex;
-  margin-right: @border-width;
-  width: @content-height;
-  height: @content-height;
-  border-radius: @border-radius-base - @border-width;
-  background-color: white;
-
-  align-items: center;
-  justify-content: center;
-}
-
-.favicon {
-}
-
-.linkText, .sourceConn, .remove {
-  padding: (@content-height - @text-height) / 2;
-}
-
-.linkText {
-  overflow: hidden;
-  color: white;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  flex-shrink: 1;
-}
-
-.remove, .sourceConn {
-  width: @block-height;
-  height: @block-height;
-  border: @border-width solid transparent;
-  color: @text-color;
-  text-align: center;
-  transition: none; // overwrite antd/lib/style/core/base.less
-  /*     background-color: lightcoral; */
-}
-
-.remove {
-  margin-right: @gap;
-  border-radius: @block-height / 2;
-  cursor: pointer;
-
-  flex-shrink: 0;
-}
-
-.remove:hover {
-  background-color: @error-color;
-  color: @btn-primary-color;
-}
-
-// .sourceConn {
-//   margin: 0 @gap;
-// }

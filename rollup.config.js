@@ -1,6 +1,6 @@
-import replace from "rollup-plugin-replace";
-import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
+import resolve from "rollup-plugin-node-resolve";
+import replace from "rollup-plugin-replace";
 
 export default ["background", "content-persistent", "view"].map(basename => ({
   input: `.ts_temp/${basename}.js`,

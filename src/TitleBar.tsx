@@ -1,16 +1,18 @@
-import { browser } from "../lib/browser-polyfill";
-import * as React from "react";
-import { createIntention } from "./Message";
-import { ViewModel } from "./view-model";
-import { Consumer } from "./context";
-import { RootSelector } from "./RootSelector";
-import { HelpPanel } from "./HelpPanel";
-import Divider from "antd/lib/divider";
 import "antd/lib/divider/style";
-import Icon from "antd/lib/icon";
 import "antd/lib/icon/style";
-import Tooltip from "antd/lib/tooltip";
 import "antd/lib/tooltip/style";
+
+import Divider from "antd/lib/divider";
+import Icon from "antd/lib/icon";
+import Tooltip from "antd/lib/tooltip";
+import * as React from "react";
+
+import { Consumer } from "./context";
+import { HelpPanel } from "./HelpPanel";
+import { createIntention } from "./Message";
+import { RootSelector } from "./RootSelector";
+import * as texts from "./texts";
+import { ViewModel } from "./view-model";
 
 export class TitleBar extends React.Component {
   model?: ViewModel;
@@ -22,24 +24,37 @@ export class TitleBar extends React.Component {
           if (!model) return;
           this.model = model;
           return (
-            <div className="root">
-              <span className="rootTitle">{model.state.name}</span>
-              <Divider type="vertical" />
-              <Tooltip
-                title={browser.i18n.getMessage("changeBookmarkFolder")}
-                placement="bottom"
-              >
+            <div className="titleBar">
+              {this.model.state.id ? (
+                [
+                  <span className="rootTitle">{model.state.name}</span>,
+                  <Divider type="vertical" />,
+                  <Tooltip
+                    title={texts.changeBookmarkFolder}
+                    placement="bottom"
+                  >
+                    <a onClick={this.onClickChangeRoot}>
+                      <Icon type="book" />
+                    </a>
+                  </Tooltip>
+                ]
+              ) : (
                 <a onClick={this.onClickChangeRoot}>
+                  {texts.failedRoot + " "}
                   <Icon type="book" />
                 </a>
-              </Tooltip>
+              )}
               <RootSelector />
               <span className="elasticSpace" />
-              <a className="secondaryLink" onClick={this.onClickShowHelp}>
-                {browser.i18n.getMessage("help") + " "}
-                <Icon type="question-circle-o" />
-              </a>
-              <HelpPanel />
+              {this.model.state.graph.ids.length > 0
+                ? [
+                    <a className="secondaryLink" onClick={this.onClickShowHelp}>
+                      {texts.help + " "}
+                      <Icon type="question-circle-o" />
+                    </a>,
+                    <HelpPanel />
+                  ]
+                : null}
             </div>
           );
         }}

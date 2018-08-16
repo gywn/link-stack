@@ -1,10 +1,16 @@
-import { browser } from "../lib/browser-polyfill";
+import "antd/lib/style/index";
+import "antd/lib/divider/style";
+
+import "../style/view.less";
+
+import Divider from "antd/lib/divider";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ViewModel } from "./view-model";
+
 import { Provider } from "./context";
 import { LinkStack } from "./LinkStack";
-import "../style/view.less";
+import * as texts from "./texts";
+import { ViewModel } from "./view-model";
 
 window.onload = async () => {
   const model = new ViewModel();
@@ -13,17 +19,20 @@ window.onload = async () => {
   model.subscribe(state => {
     ReactDOM.render(
       <Provider value={model}>
-        <LinkStack />
+        {[
+          <LinkStack />,
+          <div className="footer">
+            <a href="https://www.github.com/gywn/link-stack">{texts.forkMe}</a>
+            <Divider type="vertical" />
+            <a href="https://www.github.com/gywn/link-stack/issues">
+              {texts.reportBugs}
+            </a>
+          </div>
+        ]}
       </Provider>,
-      document.body
+      document.getElementById("linkStack")
     );
-    document.title =
-      browser.i18n.getMessage(
-        "extensionTitle",
-        state.graph.ids.length.toString()
-      ) +
-      " | " +
-      browser.i18n.getMessage("extensionName");
+    document.title = texts.extTitle(state.graph.ids.length);
   });
 
   console.log("view loaded");

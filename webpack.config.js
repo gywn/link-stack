@@ -1,7 +1,6 @@
-const path = require("path");
-const { WebpackMakefilePlugin } = require("./lib/webpack-makefile-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebpackMakefilePlugin = require("./lib/webpack-makefile-plugin");
 
 module.exports = {
   entry: {
@@ -19,8 +18,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      title: "Link Stack",
+      title: "Loading...",
       filename: __dirname + "/dist/view.html",
+      template: __dirname + "/html/view.html",
       inject: "head",
       chunks: ["view"]
     })
@@ -39,7 +39,7 @@ module.exports = {
           {
             loader: "less-loader",
             options: {
-              javascriptEnabled: true
+              javascriptEnabled: true // Ant Design's requirement
             }
           }
         ]
@@ -49,5 +49,5 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts", ".tsx"]
   },
-  devtool: false
+  devtool: false // to avoid `eval` in development mode
 };

@@ -1,17 +1,24 @@
 {
-  "extensionName": {
-    "message": "Link Stack"
+  "extName": { "message": "Link Stack" },
+  "extDesc": {
+    "message": "基于书签的「链接堆栈」，个人信息处理的好帮手"
   },
-  "extensionDesc": {
-    "message": "基于书签的​「超链接堆栈」，个人信息处理的好帮手"
-  },
-  "extensionTitle": {
-    "message": "$COUNT$ 链接",
-    "placeholders": { "count": { "content": "$1" } }
+  "extTitle": {
+    "message": "$count$ 链接 | $extName$",
+    "placeholders": {
+      "count": { "content": "$2" },
+      "extName": { "content": "$1" }
+    }
   },
   "emptyLinkText": { "message": "链接" },
-  "openLinkStack": { "message": "打开 Link Stack" },
-  "pushLink": { "message": "存入 Link Stack" },
+  "openLinkStack": {
+    "message": "打开 $extName$",
+    "placeholders": { "extName": { "content": "$1" } }
+  },
+  "pushLink": {
+    "message": "存入 $extName$",
+    "placeholders": { "extName": { "content": "$1" } }
+  },
   "pushActiveTabDesc": { "message": "保存当前页面并关闭页面" },
   "removeLink": { "message": "删除链接" },
   "confirm": { "message": "确认" },
@@ -19,10 +26,12 @@
   "cancel": { "message": "取消" },
   "changeBookmarkFolder": { "message": "更换书签文件夹" },
   "changeBookmarkFolderDesc": {
-    "message": "Link Stack 需要接管一个书签文件夹来储存自身的数据。被选中的文件夹中的书签会被完整保留。"
+    "message": "$extName$ 需要接管一个书签文件夹来储存自身的数据。被选中的文件夹中的书签会被完整保留。",
+    "placeholders": { "extName": { "content": "$1" } }
   },
   "help": { "message": "帮助" },
-  "helpText": {
-    "message": "Link Stack 是一个简单的插件，它只支持三种操作：</br>1. 按快捷键 Alt + Shift + 2 将当前页面存入 Link Stack；</br>2. 右键菜单「存入 Link Stack」将超链接存入 Link Stack；</br>3. 点击 Link Stack 中保存的链接将之删除并在新页面中打开。"
-  }
+  "failedRoot": { "message": "装载失败，请选择另外的书签文件夹。" },
+  "forkMe": { "message": "Fork me on Github" },
+  "reportBugs": { "message": "报告错误" },
+  "lang": { "message": "zh_CN" }
 }

@@ -1,17 +1,24 @@
 {
-  "extensionName": {
-    "message": "Link Stack"
-  },
-  "extensionDesc": {
+  "extName": { "message": "Link Stack" },
+  "extDesc": {
     "message": "Stack of links built on top of bookmarks to help you accelerate information processing"
   },
-  "extensionTitle": {
-    "message": "$COUNT$ Links",
-    "placeholders": { "count": { "content": "$1" } }
+  "extTitle": {
+    "message": "$count$ Links | $extName$",
+    "placeholders": {
+      "count": { "content": "$2" },
+      "extName": { "content": "$1" }
+    }
   },
   "emptyLinkText": { "message": "Link" },
-  "openLinkStack": { "message": "Open Link Stack" },
-  "pushLink": { "message": "Save to Link Stack" },
+  "openLinkStack": {
+    "message": "Open $extName$",
+    "placeholders": { "extName": { "content": "$1" } }
+  },
+  "pushLink": {
+    "message": "Save to $extName$",
+    "placeholders": { "extName": { "content": "$1" } }
+  },
   "pushActiveTabDesc": { "message": "Save the active tab and close it" },
   "removeLink": { "message": "Remove Link" },
   "confirm": { "message": "Confirm" },
@@ -19,10 +26,14 @@
   "cancel": { "message": "Cancel" },
   "changeBookmarkFolder": { "message": "Change Bookmark Folder" },
   "changeBookmarkFolderDesc": {
-    "message": "Link Stack takes over a folder to manage its data. All bookmarks in the chosen folder will be kept."
+    "message": "$extName$ takes over a folder to manage its data. All bookmarks in the chosen folder will be kept.",
+    "placeholders": { "extName": { "content": "$1" } }
   },
   "help": { "message": "Help" },
-  "helpText": {
-    "message": "Link Stack is a simple extension. It only supports three operations:<br/> 1. Use keyboard shortcut \"Alt + Shift + 2\" to save the current page into Link Stack;<br/> 2. Use the right-click menu \"Save to Link Stack\" to save the link into Link Stack;<br/> 3. Click a saved link in Link Stack to delete it and open it in a new tab."
-  }
+  "failedRoot": {
+    "message": "Loading failed. Please select another bookmark folder."
+  },
+  "forkMe": { "message": "Fork me on Github" },
+  "reportBugs": { "message": "Report Bugs" },
+  "lang": { "message": "en" }
 }

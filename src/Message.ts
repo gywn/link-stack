@@ -1,6 +1,6 @@
+import { BookmarkTreeSelection } from "./bookmark-tree";
 import { Snapshot } from "./link-stack.d";
 import { TabCreateProps } from "./view-model.d";
-import { BookmarkTreeSelection } from "./bookmark-tree";
 
 export enum MsgType {
   Intention,

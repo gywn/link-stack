@@ -1,8 +1,10 @@
-import { browser } from "../lib/browser-polyfill";
-import { MsgType, isMessage, createMessage } from "./Message";
-import { LinkStack } from "./link-stack";
-import { bookmarkTree, bookmarkPath } from "./bookmark-tree";
 import * as store from "store2";
+
+import { browser } from "../lib/browser-polyfill";
+import { bookmarkPath, bookmarkTree } from "./bookmark-tree";
+import { LinkStack } from "./link-stack";
+import { MsgType, createMessage, isMessage } from "./Message";
+import * as texts from "./texts";
 
 interface View {
   port: browser.runtime.Port;
@@ -33,6 +35,7 @@ const onLSUpdate = (
 };
 
 const cmdActivateView = async () => {
+  console.log("ACTIVATE_VIEW");
   const viewURL = browser.extension.getURL("view.html");
   const tabs = await browser.tabs.query({ url: viewURL });
   if (tabs.length > 0) browser.tabs.update(tabs[0].id, { active: true });
@@ -78,12 +81,12 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
           if (o.intention === "get-bookmark-tree") {
             const tree = await bookmarkTree();
             const rootId = stack.getSnapshot().id;
-            if (tree && rootId) {
+            if (tree) {
               port.postMessage(
                 createMessage<MsgType.BookmarkTreeSelection>({
                   intention: "bookmark-tree",
                   type: MsgType.BookmarkTreeSelection,
-                  data: { tree, path: await bookmarkPath(rootId) }
+                  data: { tree, path: rootId ? await bookmarkPath(rootId) : [] }
                 })
               );
             }
@@ -106,7 +109,7 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
   });
 
   browser.contextMenus.create({
-    title: browser.i18n.getMessage("pushLink"),
+    title: texts.pushLink,
     contexts: ["link"],
     onclick: (click, tab) => {
       // linkText is a Firefox-only property. Chromium auto select link's text.
@@ -130,6 +133,8 @@ const cmdPushActiveTab = async (stack: LinkStack) => {
   browser.commands.onCommand.addListener(cmd => {
     if (cmd === "push-active-tab") cmdPushActiveTab(stack);
   });
+
+  browser.runtime.onInstalled.addListener(cmdActivateView);
 
   console.log("background loaded");
 })();

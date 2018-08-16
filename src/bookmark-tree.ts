@@ -1,6 +1,7 @@
-import { browser } from "../lib/browser-polyfill";
-import { getBookmark } from "./util";
 import { CascaderOptionType } from "antd/lib/cascader";
+
+import { browser } from "../lib/browser-polyfill";
+import { bookmarks } from "./util";
 
 export interface BookmarkTreeSelection {
   tree: CascaderOptionType[];
@@ -31,7 +32,9 @@ const bookmarkPath = async (id: string): Promise<string[]> => {
   const path: string[] = [];
   let _id: string | undefined = id;
   while (_id) {
-    const nodes: browser.bookmarks.BookmarkTreeNode[] = await getBookmark(_id);
+    const nodes: browser.bookmarks.BookmarkTreeNode[] = await bookmarks.get(
+      _id
+    );
     if (nodes.length === 0) break;
     _id = nodes[0].parentId;
     _id && path.unshift(nodes[0].id);

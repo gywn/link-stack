@@ -1,12 +1,14 @@
-import { browser } from "../lib/browser-polyfill";
-import * as React from "react";
-import { MsgType, createMessage, createIntention } from "./Message";
-import { ModalState, ViewModel } from "./view-model";
-import { Consumer } from "./context";
-import Cascader from "antd/lib/cascader";
 import "antd/lib/cascader/style";
-import Modal from "antd/lib/modal";
 import "antd/lib/modal/style";
+
+import Cascader from "antd/lib/cascader";
+import Modal from "antd/lib/modal";
+import * as React from "react";
+
+import { Consumer } from "./context";
+import { MsgType, createIntention, createMessage } from "./Message";
+import * as texts from "./texts";
+import { ModalState, ViewModel } from "./view-model";
 
 export class RootSelector extends React.Component<
   {},
@@ -23,10 +25,10 @@ export class RootSelector extends React.Component<
           this.model = model;
           return (
             <Modal
-              title={browser.i18n.getMessage("changeBookmarkFolder")}
-              okText={browser.i18n.getMessage("setRoot")}
+              title={texts.changeBookmarkFolder}
+              okText={texts.setRoot}
               visible={true}
-              cancelText={browser.i18n.getMessage("cancel")}
+              cancelText={texts.cancel}
               okButtonProps={{ disabled: !this.state.rootId }}
               onOk={this.onClickConfirmRoot}
               onCancel={this.onClickCancel}
@@ -43,7 +45,7 @@ export class RootSelector extends React.Component<
                   />
                 ) : null}
               </p>
-              <p>{browser.i18n.getMessage("changeBookmarkFolderDesc")}</p>
+              <p>{texts.changeBookmarkFolderDesc}</p>
             </Modal>
           );
         }}

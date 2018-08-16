@@ -1,10 +1,13 @@
-import { browser } from "../lib/browser-polyfill";
-import * as React from "react";
-import { createIntention } from "./Message";
-import { ModalState, ViewModel } from "./view-model";
-import { Consumer } from "./context";
-import Modal from "antd/lib/modal";
 import "antd/lib/modal/style";
+
+import Modal from "antd/lib/modal";
+import * as React from "react";
+
+import { Consumer } from "./context";
+import { createIntention } from "./Message";
+import * as texts from "./texts";
+import { helpMessages } from "./util-widgets";
+import { ModalState, ViewModel } from "./view-model";
 
 export class HelpPanel extends React.Component<{}, { rootId: string | null }> {
   model?: ViewModel;
@@ -18,12 +21,12 @@ export class HelpPanel extends React.Component<{}, { rootId: string | null }> {
           this.model = model;
           return (
             <Modal
-              title={browser.i18n.getMessage("help")}
+              title={texts.help}
               visible={true}
               footer={null}
               onCancel={this.onClickCancel}
             >
-              <p>{browser.i18n.getMessage("helpText")}</p>
+              {helpMessages[texts.lang]}
             </Modal>
           );
         }}
