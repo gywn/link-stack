@@ -21,11 +21,11 @@
   flex-shrink: 0;
 }
 
-.secondaryLink {
+.secondary-link {
   color: @text-color-secondary;
 }
 
-#linkStack {
+#link-stack {
   display: flex;
   flex-direction: column;
   padding: @large-gap;
@@ -44,7 +44,7 @@
     }
   }
 
-  .linkStackContent {
+  .content {
     position: relative;
     margin-bottom: @large-gap;
     padding-bottom: @large-gap;
@@ -60,7 +60,7 @@
       }
     }
 
-    .syncIndicator {
+    .sync-indicator {
       position: absolute;
       top: @text-height;
       right: @text-height;
@@ -76,7 +76,7 @@
       }
     }
 
-    .titleBar {
+    .title-bar {
       display: flex;
       margin-bottom: @large-gap;
       padding: 16px @large-gap;
@@ -85,18 +85,18 @@
       justify-content: space-between;
       align-items: center;
 
-      .rootTitle {
+      .root-title {
         font-weight: 500;
         font-size: @font-size-lg;
         line-height: @font-size-lg;
       }
 
-      .elasticSpace {
+      .elastic-space {
         flex-grow: 1;
       }
     }
 
-    .innerLinkStack {
+    .inner-link-stack {
       overflow: hidden;
       margin: 0 @large-gap;
 
@@ -134,7 +134,7 @@
             max-width: 200px;
           }
 
-          .faviconWrapper {
+          .favicon-wrapper {
             display: flex;
             margin-right: @border-width;
             width: @content-height;
@@ -146,7 +146,7 @@
             justify-content: center;
           }
 
-          .linkText {
+          .link-text {
             overflow: hidden;
             padding: (@content-height - @text-height) / 2;
             color: white;
@@ -157,7 +157,7 @@
           }
         }
 
-        .sourceConn, .remove {
+        .source-connector, .remove {
           padding: (@content-height - @text-height) / 2;
           width: @block-height;
           height: @block-height;
@@ -183,7 +183,7 @@
       }
     }
 
-    .innerLinkStackInfo {
+    .inner-link-stack-info {
       margin: 0 auto;
       padding: 0 @large-gap;
       max-width: 520px;  // Ant Design Modal's default width
@@ -206,7 +206,7 @@
   }
 }
 
-.rootSelector {
+.root-selector {
   width: 100%;
 }
 
@@ -218,6 +218,6 @@ span.process {
   color: @processing-color;
 }
 
-span.keyboardCombination > .@{tag-prefix-cls} {
+span.keyboard-combi > .@{tag-prefix-cls} {
   margin-right: 0;
 }

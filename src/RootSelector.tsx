@@ -36,7 +36,7 @@ export class RootSelector extends React.Component<
               <p>
                 {model.state.bookmarkTreeSelection ? (
                   <Cascader
-                    className="rootSelector"
+                    className="root-selector"
                     options={model.state.bookmarkTreeSelection.tree}
                     defaultValue={model.state.bookmarkTreeSelection.path}
                     changeOnSelect

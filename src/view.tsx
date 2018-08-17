@@ -30,7 +30,7 @@ window.onload = async () => {
           </div>
         ]}
       </Provider>,
-      document.getElementById("linkStack")
+      document.getElementById("link-stack")
     );
     document.title = texts.extTitle(state.graph.ids.length);
   });

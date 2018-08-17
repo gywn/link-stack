@@ -13,22 +13,22 @@ export class LinkStack extends React.Component {
       <Consumer>
         {(model: ViewModel | null) =>
           model ? (
-            <div className="linkStackContent">
+            <div className="content">
               <div
                 className={
-                  "syncIndicator" +
+                  "sync-indicator" +
                   (model.state.unsyncedUpdate ? "" : " hidden")
                 }
               />
               <TitleBar />
               {model.state.graph.ids.length > 0 ? (
-                <div className="innerLinkStack">
+                <div className="inner-link-stack">
                   {model.state.graph.ids.map(id => (
                     <Line key={id} id={id} />
                   ))}
                 </div>
               ) : (
-                <div className="innerLinkStackInfo">
+                <div className="inner-link-stack-info">
                   {helpMessages[texts.lang]}
                 </div>
               )}

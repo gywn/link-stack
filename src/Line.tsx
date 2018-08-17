@@ -62,7 +62,7 @@ export class Line extends React.Component<LineProps> {
               <div className="line">
                 {removeLink}
                 {mainLink}
-                <span className="sourceConn">
+                <span className="source-connector">
                   <Icon type="arrow-left" />
                 </span>
                 {sourceLink}

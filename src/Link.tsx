@@ -21,13 +21,13 @@ export class Link extends React.Component<LinkProps> {
         target="_blank"
         title={title}
       >
-        <div className="faviconWrapper">
+        <div className="favicon-wrapper">
           <img
             className="favicon"
             src={"https://www.google.com/s2/favicons?domain=" + hostname}
           />
         </div>
-        <span className="linkText">{title}</span>
+        <span className="link-text">{title}</span>
       </a>
     );
   }

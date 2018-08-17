@@ -24,10 +24,10 @@ export class TitleBar extends React.Component {
           if (!model) return;
           this.model = model;
           return (
-            <div className="titleBar">
+            <div className="title-bar">
               {this.model.state.id ? (
                 [
-                  <span className="rootTitle">{model.state.name}</span>,
+                  <span className="root-title">{model.state.name}</span>,
                   <Divider type="vertical" />,
                   <Tooltip
                     title={texts.changeBookmarkFolder}
@@ -45,10 +45,10 @@ export class TitleBar extends React.Component {
                 </a>
               )}
               <RootSelector />
-              <span className="elasticSpace" />
+              <span className="elastic-space" />
               {this.model.state.graph.ids.length > 0
                 ? [
-                    <a className="secondaryLink" onClick={this.onClickShowHelp}>
+                    <a className="secondary-link" onClick={this.onClickShowHelp}>
                       {texts.help + " "}
                       <Icon type="question-circle-o" />
                     </a>,
