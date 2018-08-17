@@ -7,7 +7,7 @@ Built with a highly responsive UI, this extension is intended for users who skim
 # Install
 
 - From [Chrome Web Store](https://chrome.google.com/webstore/detail/link-stack/gefmoemocgahhbblcpbbcdncjeimglib)
-- From Firefox Add-ons (_to be approved_)
+- From [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/link-stack/)
 - Or [build from source](#local-build)
 
 # Local Build
