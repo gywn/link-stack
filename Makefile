@@ -1,6 +1,6 @@
 all: $(addprefix .build-tag/,manifest _locales icons)
 
-clear:
+clean:
 	rm -r dist .build-tag
 
 dist: | .build-tag
