@@ -4,6 +4,10 @@
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
   "version": "1.0",
+  "developer": {
+    "name": "Guangyang Wen",
+    "url": "https://github.com/gywn/"
+  },
   "background": {
     "scripts": ["background.js"]
   },
