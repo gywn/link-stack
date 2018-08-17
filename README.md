@@ -6,8 +6,15 @@ Built with a highly responsive UI, this extension is intended for users who skim
 
 # Install
 
-[GNU Make](https://www.gnu.org/software/make/) is required to build the project. Clone the Github repository and then simply:
+- From [Chrome Web Store](https://chrome.google.com/webstore/detail/link-stack/gefmoemocgahhbblcpbbcdncjeimglib)
+- From Firefox Add-ons (_to be approved_)
+- Or [build from source](#local-build)
+
+# Local Build
+
+[GNU Make](https://www.gnu.org/software/make/) is required to build the project. The use of [web-ext](https://github.com/mozilla/web-ext) is also recommended. To build the extension, clone this repository and then:
 
 ```
-> npm install
+npm install
+web-ext build -s dist
 ```
