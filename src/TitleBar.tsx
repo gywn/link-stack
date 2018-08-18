@@ -48,7 +48,10 @@ export class TitleBar extends React.Component {
               <span className="elastic-space" />
               {this.model.state.graph.ids.length > 0
                 ? [
-                    <a className="secondary-link" onClick={this.onClickShowHelp}>
+                    <a
+                      className="secondary-link"
+                      onClick={this.onClickShowHelp}
+                    >
                       {texts.help + " "}
                       <Icon type="question-circle-o" />
                     </a>,

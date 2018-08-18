@@ -10,15 +10,12 @@ export interface RunOption {
 }
 
 export class Serial {
-  private _queue: Task<any>[];
-  private _running: boolean;
-  private _triggers: Map<string, { func: () => void; active: boolean }>;
-
-  constructor() {
-    this._queue = [];
-    this._running = false;
-    this._triggers = new Map();
-  }
+  private _queue: Task<any>[] = [];
+  private _running: boolean = false;
+  private _triggers: Map<
+    string,
+    { func: () => void; active: boolean }
+  > = new Map();
 
   subscribe(name: string, func: () => void) {
     this._triggers.set(name, { func, active: false });

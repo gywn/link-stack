@@ -5,11 +5,7 @@ import { Snapshot } from "./link-stack.h";
 import { Message, MsgType, createIntention, isMessage } from "./message";
 
 class Delayer {
-  private _handle: number | null;
-
-  constructor() {
-    this._handle = null;
-  }
+  private _handle: number | null = null;
 
   later(func: (...args: any[]) => void, timeout: number) {
     if (this._handle !== null) clearTimeout(this._handle);
@@ -31,26 +27,23 @@ export interface ViewModelState extends Snapshot {
 }
 
 export class ViewModel {
-  state: ViewModelState;
+  state: ViewModelState = {
+    name: null,
+    id: null,
+    graph: emptyGraph(),
+    monotron: 0,
+    unsyncedUpdate: true,
+    bookmarkTreeSelection: null,
+    modal: ModalState.None
+  };
 
-  private _port: browser.runtime.Port;
-  private _listeners: ((state: ViewModelState) => void)[];
-  private _updateDelayer: Delayer;
+  private _port: browser.runtime.Port = browser.runtime.connect({
+    name: "view"
+  });
+  private _listeners: ((state: ViewModelState) => void)[] = [];
+  private _updateDelayer: Delayer = new Delayer();
 
   constructor() {
-    this.state = {
-      name: null,
-      id: null,
-      graph: emptyGraph(),
-      monotron: 0,
-      unsyncedUpdate: true,
-      bookmarkTreeSelection: null,
-      modal: ModalState.None
-    };
-    this._port = browser.runtime.connect({ name: "view" });
-    this._listeners = [];
-    this._updateDelayer = new Delayer();
-
     this._port.onMessage.addListener(o => this.dispatch(o as any));
 
     this.dispatch(createIntention("_init"));

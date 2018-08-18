@@ -34,7 +34,7 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {},
-  "license" : "MIT",
+  "license": "MIT",
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
       "parser": "typescript",
