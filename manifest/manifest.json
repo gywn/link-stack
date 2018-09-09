@@ -3,7 +3,7 @@
   "default_locale": "en",
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
-  "version": "1.0",
+  "version": "1.1",
   "author": "Guangyang Wen",
   "homepage_url": "https://github.com/gywn/",
   "background": {

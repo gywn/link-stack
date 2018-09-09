@@ -28,13 +28,12 @@
 #link-stack {
   display: flex;
   flex-direction: column;
-  padding: @large-gap;
-  padding-bottom: 16px;
-  min-height: 100%;
-  background-color: @background-color-base;
-
   align-items: center;
   justify-content: space-between;
+  min-height: 100%;
+  padding: @large-gap;
+  padding-bottom: 16px;
+  background-color: @background-color-base;
 
   @media (max-width: 799px) {
     & {
@@ -46,12 +45,12 @@
 
   .content {
     position: relative;
+    width: calc(800px - 2 * @large-gap);
     margin-bottom: @large-gap;
     padding-bottom: @large-gap;
-    width: calc(800px - 2 * @large-gap);
     border-radius: @gap;
     background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
     @media (max-width: 799px) {
       & {
@@ -68,8 +67,8 @@
       height: @text-height;
       border-radius: @text-height / 2;
       background-color: @primary-color;
+      animation: blinker 0.5s linear infinite;
       opacity: 1;
-      animation: blinker .5s linear infinite;
 
       &.hidden {
         visibility: hidden;
@@ -78,16 +77,15 @@
 
     .title-bar {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: @large-gap;
       padding: 16px @large-gap;
       border-bottom: @border-width-base @border-style-base @border-color-split;
 
-      justify-content: space-between;
-      align-items: center;
-
       .root-title {
-        font-weight: 500;
         font-size: @font-size-lg;
+        font-weight: 500;
         line-height: @font-size-lg;
       }
 
@@ -97,37 +95,36 @@
     }
 
     .inner-link-stack {
-      overflow: hidden;
       margin: 0 @large-gap;
+      overflow: hidden;
 
       .line {
         display: flex;
-        font-weight: 500;
-        font-size: @text-height;
-        line-height: @text-height;
-
         align-items: center;
+        overflow-x: scroll;
+        font-size: @text-height;
+        font-weight: 500;
+        line-height: @text-height;
 
         &:not(:last-of-type) {
           margin-bottom: @gap;
         }
 
         .link {
+          --link-bg: @primary-color;
           display: flex;
+          flex-shrink: 1;
           border: @border-width solid var(--link-bg);
           border-radius: @border-radius-base;
           background-color: var(--link-bg);
           text-decoration: none;
-
-          flex-shrink: 1;
-          --link-bg: @primary-color;
 
           &:hover {
             --link-bg: @primary-5;
           }
 
           &.mainLink {
-            max-width: calc(100% - @block-height - @gap);
+            max-width: calc(100% - 4 * @block-height - @gap);
           }
 
           &.sourceLink {
@@ -136,31 +133,30 @@
 
           .favicon-wrapper {
             display: flex;
-            margin-right: @border-width;
-            width: @content-height;
-            height: @content-height;
-            border-radius: @border-radius-base - @border-width;
-            background-color: white;
-
             align-items: center;
             justify-content: center;
+            width: @content-height;
+            height: @content-height;
+            margin-right: @border-width;
+            border-radius: @border-radius-base - @border-width;
+            background-color: white;
           }
 
           .link-text {
-            overflow: hidden;
+            flex-shrink: 1;
             padding: (@content-height - @text-height) / 2;
+            overflow: hidden;
             color: white;
             text-overflow: ellipsis;
             white-space: nowrap;
-
-            flex-shrink: 1;
           }
         }
 
-        .source-connector, .remove {
-          padding: (@content-height - @text-height) / 2;
+        .source-connector,
+        .remove {
           width: @block-height;
           height: @block-height;
+          padding: (@content-height - @text-height) / 2;
           border: @border-width solid transparent;
           color: @text-color;
           text-align: center;
@@ -169,11 +165,10 @@
         }
 
         .remove {
+          flex-shrink: 0;
           margin-right: @gap;
           border-radius: @block-height / 2;
           cursor: pointer;
-
-          flex-shrink: 0;
         }
 
         .remove:hover {
@@ -184,15 +179,15 @@
     }
 
     .inner-link-stack-info {
+      max-width: 520px; // Ant Design Modal's default width
       margin: 0 auto;
       padding: 0 @large-gap;
-      max-width: 520px;  // Ant Design Modal's default width
       color: @text-color-secondary;
     }
   }
 
   .footer {
-    a, {
+    a {
       color: @text-color-secondary;
 
       &:hover {
