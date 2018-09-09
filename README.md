@@ -16,5 +16,6 @@ Built with a highly responsive UI, this extension is intended for users who skim
 
 ```
 npm install
+npm run build
 web-ext build -s dist
 ```
